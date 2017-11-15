@@ -5,7 +5,7 @@
  * Board.cpp
  *
  *  Created on: Oct 24, 2017
- *      Author: oriel
+ *      Author: oriel, zah
  */
 
 #include "Board.h"
