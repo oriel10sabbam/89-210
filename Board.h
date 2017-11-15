@@ -10,6 +10,7 @@
 
 #ifndef BOARD_H_
 #define BOARD_H_
+#include "Point.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -34,6 +35,12 @@ public:
   Board(int row, int col);
 
   /*
+   * copy constructor of Board
+   * @ param Board* - pointer to a board
+   */
+  Board(Board* board);
+
+  /*
    * Destructor of Board
    */
   ~Board();
@@ -55,6 +62,34 @@ public:
    *
    */
   int getCol() const;
+
+  /*
+   * updateTheBoard - update The Board at the given point
+   * @ param point- the pint that need to be update
+   * @ param isWhite- true if is the white player point
+   */
+  void updateTheBoard(Point* point, bool isWhite);
+
+  /*
+   * updateTheColOfBoard- update The column Of Board
+   * @ param point- the pint that need to be update
+   * @ param isWhite- true if is the white player point
+   */
+  void updateTheColOfBoard(Point* point, bool isWhite);
+
+  /*
+   * updateTheRowOfBoard- update The row Of Board
+   * @ param point- the pint that need to be update
+   * @ param isWhite- true if is the white player point
+   */
+  void updateTheRowOfBoard(Point* point, bool isWhite);
+
+  /*
+   * updateTheSlantOfBoard- update The slant Of Board
+   * @ param point- the pint that need to be update
+   * @ param isWhite- true if is the white player point
+   */
+  void updateTheSlantOfBoard(Point* point, bool isWhite);
 
   /*
    * getValueAt- return the Square at board[i][j]

@@ -55,171 +55,6 @@ void Game::checkWhoWins() {
   grafic->printTheWiner(theWhiteWins, theBlackWins);
 }
 
-void Game::updateTheColOfBoard(Point* point, bool isWhite) {
-  //update the upper col
-  if (board->checkValueAt(!isWhite, point->getX() + 1, point->getY())) {
-
-    for (int i = point->getX() + 2; i < board->getRow(); i++) {
-      if (board->checkValueAt(!isWhite, i, point->getY())) {
-        continue;
-      }
-      if (board->checkValueAt(isWhite, i, point->getY())) {
-        for (int k = i - 1; k >= point->getX(); k--) {
-          board->setValueAccordingPlayerAt(isWhite, k, point->getY());
-        }
-      }
-      break;
-    }
-  }
-
-  //update the under col
-
-  if (board->checkValueAt(!isWhite, point->getX() - 1, point->getY())) {
-    for (int i = point->getX() - 2; i >= 0; i--) {
-      if (board->checkValueAt(!isWhite, i, point->getY())) {
-        continue;
-      }
-      if (board->checkValueAt(isWhite, i, point->getY())) {
-        for (int k = i + 1; k <= point->getX(); k++) {
-          board->setValueAccordingPlayerAt(isWhite, k, point->getY());
-        }
-      }
-      break;
-    }
-  }
-}
-
-void Game::updateTheRowOfBoard(Point* point, bool isWhite) {
-  //update the upper row
-  if (board->checkValueAt(!isWhite, point->getX(), point->getY() + 1)) {
-    for (int j = point->getY() + 2; j < board->getCol(); j++) {
-      if (board->checkValueAt(!isWhite, point->getX(), j)) {
-        continue;
-      }
-      if (board->checkValueAt(isWhite, point->getX(), j)) {
-        for (int k = j - 1; k >= point->getY(); k--) {
-          board->setValueAccordingPlayerAt(isWhite, point->getX(), k);
-        }
-      }
-      break;
-    }
-  }
-
-//update the under row
-  if (board->checkValueAt(!isWhite, point->getX(), point->getY() - 1)) {
-    for (int j = point->getY() - 2; j >= 0; j--) {
-      if (board->checkValueAt(!isWhite, point->getX(), j)) {
-        continue;
-      }
-      if (board->checkValueAt(isWhite, point->getX(), j)) {
-        for (int k = j + 1; k <= point->getY(); k++) {
-          board->setValueAccordingPlayerAt(isWhite, point->getX(), k);
-        }
-      }
-      break;
-    }
-  }
-}
-
-void Game::updateTheSlantOfBoard(Point* point, bool isWhite) {
-  //update the slant - upper row upper col
-  if (board->checkValueAt(!isWhite, point->getX() + 1, point->getY() + 1)) {
-    int i = point->getX() + 2;
-    int j = point->getY() + 2;
-    while ((i < board->getRow()) && (j < board->getCol())) {
-      if (board->checkValueAt(!isWhite, i, j)) {
-        i++;
-        j++;
-        continue;
-      }
-      if (board->checkValueAt(isWhite, i, j)) {
-        int k = i - 1;
-        int l = j - 1;
-        while (k >= point->getX()) {
-          board->setValueAccordingPlayerAt(isWhite, k, l);
-          k--;
-          l--;
-        }
-      }
-      break;
-    }
-  }
-
-  //update the slant - under row upper col
-  if (board->checkValueAt(!isWhite, point->getX() - 1, point->getY() + 1)) {
-    int i = point->getX() - 2;
-    int j = point->getY() + 2;
-    while ((i >= 0) && (j < board->getCol())) {
-      if (board->checkValueAt(!isWhite, i, j)) {
-        i--;
-        j++;
-        continue;
-      }
-      if (board->checkValueAt(isWhite, i, j)) {
-        int k = i + 1;
-        int l = j - 1;
-        while (k <= point->getX()) {
-          board->setValueAccordingPlayerAt(isWhite, k, l);
-          k++;
-          l--;
-        }
-      }
-      break;
-    }
-  }
-
-  //update the slant - uper row under col
-  if (board->checkValueAt(!isWhite, point->getX() + 1, point->getY() - 1)) {
-    int i = point->getX() + 2;
-    int j = point->getY() - 2;
-    while ((i < board->getRow()) && (j >= 0)) {
-      if (board->checkValueAt(!isWhite, i, j)) {
-        i++;
-        j--;
-        continue;
-      }
-      if (board->checkValueAt(isWhite, i, j)) {
-        int k = i - 1;
-        int l = j + 1;
-        while (k >= point->getX()) {
-          board->setValueAccordingPlayerAt(isWhite, k, l);
-          k--;
-          l++;
-        }
-      }
-      break;
-    }
-  }
-
-  //update the slant - under row under col
-  if (board->checkValueAt(!isWhite, point->getX() - 1, point->getY() - 1)) {
-    int i = point->getX() - 2;
-    int j = point->getY() - 2;
-    while ((i >= 0) && (j >= 0)) {
-      if (board->checkValueAt(!isWhite, i, j)) {
-        i--;
-        j--;
-        continue;
-      }
-      if (board->checkValueAt(isWhite, i, j)) {
-        int k = i + 1;
-        int l = j + 1;
-        while (k <= point->getX()) {
-          board->setValueAccordingPlayerAt(isWhite, k, l);
-          k++;
-          l++;
-        }
-      }
-      break;
-    }
-  }
-}
-void Game::updateTheBoard(Point* point, bool isWhite) {
-  updateTheColOfBoard(point, isWhite);
-  updateTheRowOfBoard(point, isWhite);
-  updateTheSlantOfBoard(point, isWhite);
-}
-
 void Game::startTheGame() {
   bool isTheWhiteMove = false;
   while (remainingMoves) {
@@ -232,7 +67,7 @@ void Game::startTheGame() {
         Point* point = whitePlayer->doAMove();
         if (point->getX() != -1) {
           if (rules->checkIfIsALegalMove(true, point)) {
-            updateTheBoard(point, true);
+            board->updateTheBoard(point, true);
             remainingMoves++;
             isTheWhiteMove = false;
           } else {
@@ -262,7 +97,7 @@ void Game::startTheGame() {
         Point* point = blackPlayer->doAMove();
         if (point->getX() != -1) {
           if (rules->checkIfIsALegalMove(false, point)) {
-            updateTheBoard(point, false);
+            board->updateTheBoard(point, false);
             remainingMoves++;
             isTheWhiteMove = true;
           } else {

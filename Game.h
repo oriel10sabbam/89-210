@@ -49,34 +49,6 @@ public:
 private:
 
   /*
-   * updateTheBoard - update The Board at the given point
-   * @ param point- the pint that need to be update
-   * @ param isWhite- true if is the white player point
-   */
-  void updateTheBoard(Point* point, bool isWhite);
-
-  /*
-   * updateTheColOfBoard- update The column Of Board
-   * @ param point- the pint that need to be update
-   * @ param isWhite- true if is the white player point
-   */
-  void updateTheColOfBoard(Point* point, bool isWhite);
-
-  /*
-   * updateTheRowOfBoard- update The row Of Board
-   * @ param point- the pint that need to be update
-   * @ param isWhite- true if is the white player point
-   */
-  void updateTheRowOfBoard(Point* point, bool isWhite);
-
-  /*
-   * updateTheSlantOfBoard- update The slant Of Board
-   * @ param point- the pint that need to be update
-   * @ param isWhite- true if is the white player point
-   */
-  void updateTheSlantOfBoard(Point* point, bool isWhite);
-
-  /*
    * checkWhoWins- check Who Win the game
    */
   void checkWhoWins();
