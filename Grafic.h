@@ -14,8 +14,14 @@
 #include "Board.h"
 #include "Point.h"
 #include <list>
+#include <stdio.h>
+
 using namespace std;
 
+enum TheRival {
+  C, H
+};
+//C- Computer, H- human
 /*
  * this class represents a Grafic, that responsible for the graphics. An Abstract class
  */
@@ -48,7 +54,7 @@ public:
    * printTheLegalMoves- print the player's legal moves, a virtual pure method
    * @ param listOfPoints- list Of legal Points
    */
-  virtual void printTheLegalMoves(list<Point*> listOfPoints) const = 0;
+  virtual void printTheLegalMoves(list<Point> listOfPoints) const = 0;
 
   /*
    *  printTheWiner- print The Winer of the game, a virtual pure method
@@ -59,12 +65,18 @@ public:
       bool theWinerIsBlack) const = 0;
 
   /*
+   *  printTheMenu- print the first menu
+   *  @return the rival that the user chose
+   */
+  virtual TheRival printTheMenu() const = 0;
+
+  /*
    * printTheNewMove- print The New Move, a virtual pure method
    * @ param isWhite- true if it's the white's move
    * @ param listOfPoints- list Of legal Points
    */
-  virtual void printTheNewMove(const bool isWhite,
-      list<Point*> listOfPoints) const = 0;
+  virtual void printTheNewMove(const bool isWhite, list<Point> listOfPoints,
+      Point& point) const = 0;
 
   /*
    *printAnErrorInputNotANum- print An Error if the Input is Not A Num, a virtual pure method
@@ -75,7 +87,7 @@ public:
    * printAnErrorInputNotLegal - print An Error if the Input is Not Legal, a virtual pure method
    * @ param point- a point that is not legal
    */
-  virtual void printAnErrorInputNotLegal(Point* point) const = 0;
+  virtual void printAnErrorInputNotLegal(Point point) const = 0;
 
   /*
    * printNotPossibleNoves- print to the screen that the player have Not Possible Moves, a virtual pure method

@@ -45,7 +45,7 @@ public:
    * printTheLegalMoves- print the player's legal moves
    * @ param listOfPoints- list Of legal Points
    */
-  void printTheLegalMoves(list<Point*> listOfPoints) const;
+  void printTheLegalMoves(list<Point> listOfPoints) const;
 
   /*
    *  printTheWiner- print The Winer of the game
@@ -59,7 +59,14 @@ public:
    * @ param isWhite- true if it's the white's move
    * @ param listOfPoints- list Of legal Points
    */
-  void printTheNewMove(const bool isWhite, list<Point*> listOfPoints) const;
+  void printTheNewMove(const bool isWhite, list<Point> listOfPoints,
+      Point& point) const;
+
+  /*
+   *  printTheMenu- print the first menu
+   *  @return the rival that the user chose
+   */
+  TheRival printTheMenu() const;
 
   /*
    *printAnErrorInputNotANum- print An Error if the Input is Not A Num
@@ -70,7 +77,7 @@ public:
    * printAnErrorInputNotLegal - print An Error if the Input is Not Legal
    * @ param point- a point that is not legal
    */
-  void printAnErrorInputNotLegal(Point* point) const;
+  void printAnErrorInputNotLegal(Point point) const;
 
   /*
    * printNotPossibleNoves- print to the screen that the player have Not Possible Moves

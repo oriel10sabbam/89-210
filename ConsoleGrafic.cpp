@@ -33,18 +33,51 @@ void ConsoleGrafic::printAnErrorInputNotANum() const {
 
 }
 
-void ConsoleGrafic::printAnErrorInputNotLegal(Point* point) const {
+void ConsoleGrafic::printAnErrorInputNotLegal(Point point) const {
   char message[256];
   sprintf(message,
       "the point (%d,%d) is not legal, please enter a legal point\n",
-      point->getX() + 1, point->getY() + 1);
+      point.getX() + 1, point.getY() + 1);
   printAMessage(message);
 
 }
 
+TheRival ConsoleGrafic::printTheMenu() const {
+  printAMessage("Welcome to the Reversi Game! \n\n");
+  string c;
+  int i = 0;
+  do {
+    if (i) {
+      printAMessage("you insert wrong input, please enter c or h only \n");
+    }
+    printAMessage("Please choose your"
+        " competitor \n if you want to compete against a computer press c"
+        " \n if you want to compete against a human player press h \n");
+    cin >> c;
+    i++;
+    if (c.size() > 1) {
+      continue;
+    }
+    if ((c.at(0) == 'c') || (c.at(0) == 'h')) {
+      break;
+    }
+  } while (true);
+  if (c.at(0) == 'c') {
+    return C;
+  } else {
+    return H;
+  }
+}
+
 void ConsoleGrafic::printTheNewMove(const bool isWhite,
-    list<Point*> listOfPoints) const {
+    list<Point> listOfPoints, Point& point) const {
   printTheBoard();
+  if (point.getX() != -1) {
+    char message[256];
+    sprintf(message, "the last move was: (%d,%d)\n", point.getX() + 1,
+        point.getY() + 1);
+    printAMessage(message);
+  }
   if (isWhite) {
     printAMessage("O: It's your move\n");
   } else {
@@ -68,12 +101,11 @@ void ConsoleGrafic::printTheWiner(bool theWinerIsWhite,
   }
 }
 
-void ConsoleGrafic::printTheLegalMoves(list<Point*> listOfPoints) const {
+void ConsoleGrafic::printTheLegalMoves(list<Point> listOfPoints) const {
   cout << "the possible moves: ";
-  for (list<Point*>::iterator it = listOfPoints.begin();
+  for (list<Point>::iterator it = listOfPoints.begin();
       it != listOfPoints.end(); ++it) {
-    cout << "(" << (*it)->getX() + 1 << "," << (*it)->getY() + 1 << ") ";
-    delete (*it);
+    cout << "(" << (*it).getX() + 1 << "," << (*it).getY() + 1 << ") ";
   }
   cout << "\n\n please enter your move row col: "
       "(With a space between the row and the col)\n";

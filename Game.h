@@ -49,12 +49,18 @@ public:
 private:
 
   /*
+   * playOneTurn- play one turn of the game
+   * @ param player- the player that do the move
+   */
+  bool playOneTurn(Player* player, Point& theLastPoint, bool& isTheWhiteMove);
+
+  /*
    * checkWhoWins- check Who Win the game
    */
   void checkWhoWins();
 
-  const Player* whitePlayer;
-  const Player* blackPlayer;
+  Player* whitePlayer;
+  Player* blackPlayer;
   Board* board;
   const Rules* rules;
   const Grafic* grafic;

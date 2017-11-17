@@ -9,6 +9,10 @@
 
 #include "Point.h"
 
+Point::Point() {
+  x = -1;
+  y = -1;
+}
 Point::Point(int x1, int y1) {
   x = x1;
   y = y1;
@@ -17,11 +21,27 @@ Point::Point(int x1, int y1) {
 Point::~Point() {
 }
 
-int Point::getX() {
+bool Point::operator <(const Point& p) const {
+  if (getX() < p.getX()) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool Point::operator >(const Point& p) const {
+  if (getX() > p.getX()) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+int Point::getX() const {
   return x;
 }
 
-int Point::getY() {
+int Point::getY() const {
   return y;
 }
 

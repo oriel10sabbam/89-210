@@ -22,23 +22,23 @@ UserPlayer::UserPlayer(bool isWhite) :
 UserPlayer::~UserPlayer() {
 }
 
-Point* UserPlayer::doAMove() const {
+Point UserPlayer::doAMove() {
   int numOfRow = -1;
   int numOfCol = -1;
-  Point* point;
+  Point point;
   string r, c;
   cin >> r >> c;
   if (isDigit(r) && isDigit(c)) {
     numOfRow = atoi(r.c_str()) - 1;
     numOfCol = atoi(c.c_str()) - 1;
-    point = new Point(numOfRow, numOfCol);
+    point = Point(numOfRow, numOfCol);
   } else {
-    point = new Point(-1, -1);
+    point = Point(-1, -1);
   }
   return point;
 }
 
-bool UserPlayer::isDigit(string s) const {
+bool UserPlayer::isDigit(string s) {
   bool isDig = true;
   for (unsigned i = 0; i < s.size(); i++) {
     if (!isdigit(s.at(i))) {

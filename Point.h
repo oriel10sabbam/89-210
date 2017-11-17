@@ -17,6 +17,15 @@ class Point {
 public:
 
   /*
+   * default constructor of Point
+   */
+  Point();
+
+  bool operator <(const Point& p) const;
+
+  bool operator >(const Point& p) const;
+
+  /*
    * constructor of Point
    * @ param x1- the x value
    * @ param y1- the y value
@@ -32,13 +41,13 @@ public:
    * getX - return the x value
    * @ return- the x value
    */
-  int getX();
+  int getX() const;
 
   /*
    * getY - return the y value
    * @ return- the y value
    */
-  int getY();
+  int getY() const;
 
   /*
    * setPoint- set new values to the Point

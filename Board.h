@@ -52,6 +52,18 @@ public:
 
   /*
    * InitialBoard- this method initial the board
+   */
+  void initialWithAnotherBoard(Board* board);
+
+  /*
+   * countSquaresOfPlayer- this method count the Squares Of Player
+   * @ param isWhite- true if this is the white player
+   * @ return the number of Player Squares
+   */
+  int countSquaresOfPlayer(bool isWhite);
+
+  /*
+   * InitialBoard- this method initial the board
    * @ return row- the num of row of the board
    */
   int getRow() const;
@@ -68,28 +80,28 @@ public:
    * @ param point- the pint that need to be update
    * @ param isWhite- true if is the white player point
    */
-  void updateTheBoard(Point* point, bool isWhite);
+  void updateTheBoard(Point& point, bool isWhite);
 
   /*
    * updateTheColOfBoard- update The column Of Board
    * @ param point- the pint that need to be update
    * @ param isWhite- true if is the white player point
    */
-  void updateTheColOfBoard(Point* point, bool isWhite);
+  void updateTheColOfBoard(Point& point, bool isWhite);
 
   /*
    * updateTheRowOfBoard- update The row Of Board
    * @ param point- the pint that need to be update
    * @ param isWhite- true if is the white player point
    */
-  void updateTheRowOfBoard(Point* point, bool isWhite);
+  void updateTheRowOfBoard(Point& point, bool isWhite);
 
   /*
    * updateTheSlantOfBoard- update The slant Of Board
    * @ param point- the pint that need to be update
    * @ param isWhite- true if is the white player point
    */
-  void updateTheSlantOfBoard(Point* point, bool isWhite);
+  void updateTheSlantOfBoard(Point& point, bool isWhite);
 
   /*
    * getValueAt- return the Square at board[i][j]

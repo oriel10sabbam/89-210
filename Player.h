@@ -32,7 +32,7 @@ public:
   /*
    * DoAMove - the Player Do A Move, a virtual pure method
    */
-  virtual Point* doAMove() const = 0;
+  virtual Point doAMove() = 0;
 
   /*
    * isWhite - returm true if it's the white player

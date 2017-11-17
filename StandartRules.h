@@ -24,7 +24,7 @@ public:
    * constructor of StandartRulse
    * @ param board- a poinetr to the board
    */
-  StandartRules(const Board* board);
+  StandartRules();
 
   /*
    * Destructor of the StandartRulse
@@ -34,17 +34,17 @@ public:
   /*
    * view the Rules class
    */
-  bool areThePlayerHasALegalMove(bool isWhite) const;
+  bool areThePlayerHasALegalMove(bool isWhite, Board* board) const;
 
   /*
    * view the Rules class
    */
-  bool checkIfIsALegalMove(bool isWhite, Point* point) const;
+  bool checkIfIsALegalMove(bool isWhite, Point point, Board* board) const;
 
   /*
    * view the Rules class
    */
-  list<Point*> theLegalMovesOfPlayer(bool isWhite) const;
+  list<Point> theLegalMovesOfPlayer(bool isWhite, Board* board) const;
 
 };
 

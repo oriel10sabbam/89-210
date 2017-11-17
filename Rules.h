@@ -22,9 +22,8 @@ public:
 
   /*
    * constructor of Rules
-   * @ param board- a poinetr to the board
    */
-  Rules(const Board* board);
+  Rules();
 
   /*
    * Destructor of the Rules
@@ -35,9 +34,10 @@ public:
    * areThePlayerHasALegalMove - check and return true if The Player Has
    * A Legal Move, a virtual pure method
    * @ param isWhite- true if is the white player
+   * @ param board- a pointer to board
    * @ return true if is a legal move to the player
    */
-  virtual bool areThePlayerHasALegalMove(bool isWhite) const = 0;
+  virtual bool areThePlayerHasALegalMove(bool isWhite, Board* board) const = 0;
 
   /*
    * checkIfIsALegalMove - check and return true if the point Is
@@ -47,7 +47,8 @@ public:
    * @ param point- the point that need to check
    * @ return true if is a legal move to the player
    */
-  virtual bool checkIfIsALegalMove(bool isWhite, Point* point) const = 0;
+  virtual bool checkIfIsALegalMove(bool isWhite, Point point,
+      Board* board) const = 0;
 
   /*
    * theLegalMovesOfPlayer - return the Legal Moves Of Player
@@ -55,10 +56,8 @@ public:
    * @ param isWhite- true if is the white player
    * @ return list of the legal Points
    */
-  virtual list<Point*> theLegalMovesOfPlayer(bool isWhite) const = 0;
-
-protected:
-  const Board* board;
+  virtual list<Point> theLegalMovesOfPlayer(bool isWhite,
+      Board* board) const = 0;
 };
 
 #endif /* RULES_H_ */

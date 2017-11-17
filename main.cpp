@@ -13,13 +13,20 @@
 #include "UserPlayer.h"
 #include "ConsoleGrafic.h"
 #include "StandartRules.h"
+#include "ComputerPlayer.h"
 
 int main() {
-  Player* whitePlayer = new UserPlayer(true);
-  Player* blackPlayer = new UserPlayer(false);
-  Board* board = new Board(8, 8);
-  Rules* rules = new StandartRules(board);
+  Board* board = new Board(6, 6);
+  Rules* rules = new StandartRules();
   Grafic* grafic = new ConsoleGrafic(board);
+  TheRival theRival = grafic->printTheMenu();
+  Player* whitePlayer;
+  if (theRival == C) {
+    whitePlayer = new ComputerPlayer(true, board, rules);
+  } else {
+    whitePlayer = new UserPlayer(true);
+  }
+  Player* blackPlayer = new UserPlayer(false);
   Game game = Game(whitePlayer, blackPlayer, board, rules, grafic);
   game.startTheGame();
   delete whitePlayer;

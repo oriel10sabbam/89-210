@@ -41,23 +41,23 @@ Board::~Board() {
   delete[] theBoard;
 }
 
-void Board::updateTheBoard(Point* point, bool isWhite) {
+void Board::updateTheBoard(Point& point, bool isWhite) {
   updateTheColOfBoard(point, isWhite);
   updateTheRowOfBoard(point, isWhite);
   updateTheSlantOfBoard(point, isWhite);
 }
 
-void Board::updateTheColOfBoard(Point* point, bool isWhite) {
+void Board::updateTheColOfBoard(Point& point, bool isWhite) {
   //update the upper col
-  if (checkValueAt(!isWhite, point->getX() + 1, point->getY())) {
+  if (checkValueAt(!isWhite, point.getX() + 1, point.getY())) {
 
-    for (int i = point->getX() + 2; i < getRow(); i++) {
-      if (checkValueAt(!isWhite, i, point->getY())) {
+    for (int i = point.getX() + 2; i < getRow(); i++) {
+      if (checkValueAt(!isWhite, i, point.getY())) {
         continue;
       }
-      if (checkValueAt(isWhite, i, point->getY())) {
-        for (int k = i - 1; k >= point->getX(); k--) {
-          setValueAccordingPlayerAt(isWhite, k, point->getY());
+      if (checkValueAt(isWhite, i, point.getY())) {
+        for (int k = i - 1; k >= point.getX(); k--) {
+          setValueAccordingPlayerAt(isWhite, k, point.getY());
         }
       }
       break;
@@ -66,14 +66,14 @@ void Board::updateTheColOfBoard(Point* point, bool isWhite) {
 
   //update the under col
 
-  if (checkValueAt(!isWhite, point->getX() - 1, point->getY())) {
-    for (int i = point->getX() - 2; i >= 0; i--) {
-      if (checkValueAt(!isWhite, i, point->getY())) {
+  if (checkValueAt(!isWhite, point.getX() - 1, point.getY())) {
+    for (int i = point.getX() - 2; i >= 0; i--) {
+      if (checkValueAt(!isWhite, i, point.getY())) {
         continue;
       }
-      if (checkValueAt(isWhite, i, point->getY())) {
-        for (int k = i + 1; k <= point->getX(); k++) {
-          setValueAccordingPlayerAt(isWhite, k, point->getY());
+      if (checkValueAt(isWhite, i, point.getY())) {
+        for (int k = i + 1; k <= point.getX(); k++) {
+          setValueAccordingPlayerAt(isWhite, k, point.getY());
         }
       }
       break;
@@ -82,16 +82,16 @@ void Board::updateTheColOfBoard(Point* point, bool isWhite) {
 
 }
 
-void Board::updateTheRowOfBoard(Point* point, bool isWhite) {
+void Board::updateTheRowOfBoard(Point& point, bool isWhite) {
   //update the upper row
-  if (checkValueAt(!isWhite, point->getX(), point->getY() + 1)) {
-    for (int j = point->getY() + 2; j < getCol(); j++) {
-      if (checkValueAt(!isWhite, point->getX(), j)) {
+  if (checkValueAt(!isWhite, point.getX(), point.getY() + 1)) {
+    for (int j = point.getY() + 2; j < getCol(); j++) {
+      if (checkValueAt(!isWhite, point.getX(), j)) {
         continue;
       }
-      if (checkValueAt(isWhite, point->getX(), j)) {
-        for (int k = j - 1; k >= point->getY(); k--) {
-          setValueAccordingPlayerAt(isWhite, point->getX(), k);
+      if (checkValueAt(isWhite, point.getX(), j)) {
+        for (int k = j - 1; k >= point.getY(); k--) {
+          setValueAccordingPlayerAt(isWhite, point.getX(), k);
         }
       }
       break;
@@ -99,14 +99,14 @@ void Board::updateTheRowOfBoard(Point* point, bool isWhite) {
   }
 
 //update the under row
-  if (checkValueAt(!isWhite, point->getX(), point->getY() - 1)) {
-    for (int j = point->getY() - 2; j >= 0; j--) {
-      if (checkValueAt(!isWhite, point->getX(), j)) {
+  if (checkValueAt(!isWhite, point.getX(), point.getY() - 1)) {
+    for (int j = point.getY() - 2; j >= 0; j--) {
+      if (checkValueAt(!isWhite, point.getX(), j)) {
         continue;
       }
-      if (checkValueAt(isWhite, point->getX(), j)) {
-        for (int k = j + 1; k <= point->getY(); k++) {
-          setValueAccordingPlayerAt(isWhite, point->getX(), k);
+      if (checkValueAt(isWhite, point.getX(), j)) {
+        for (int k = j + 1; k <= point.getY(); k++) {
+          setValueAccordingPlayerAt(isWhite, point.getX(), k);
         }
       }
       break;
@@ -115,11 +115,11 @@ void Board::updateTheRowOfBoard(Point* point, bool isWhite) {
 
 }
 
-void Board::updateTheSlantOfBoard(Point* point, bool isWhite) {
+void Board::updateTheSlantOfBoard(Point& point, bool isWhite) {
   //update the slant - upper row upper col
-  if (checkValueAt(!isWhite, point->getX() + 1, point->getY() + 1)) {
-    int i = point->getX() + 2;
-    int j = point->getY() + 2;
+  if (checkValueAt(!isWhite, point.getX() + 1, point.getY() + 1)) {
+    int i = point.getX() + 2;
+    int j = point.getY() + 2;
     while ((i < getRow()) && (j < getCol())) {
       if (checkValueAt(!isWhite, i, j)) {
         i++;
@@ -129,7 +129,7 @@ void Board::updateTheSlantOfBoard(Point* point, bool isWhite) {
       if (checkValueAt(isWhite, i, j)) {
         int k = i - 1;
         int l = j - 1;
-        while (k >= point->getX()) {
+        while (k >= point.getX()) {
           setValueAccordingPlayerAt(isWhite, k, l);
           k--;
           l--;
@@ -140,9 +140,9 @@ void Board::updateTheSlantOfBoard(Point* point, bool isWhite) {
   }
 
   //update the slant - under row upper col
-  if (checkValueAt(!isWhite, point->getX() - 1, point->getY() + 1)) {
-    int i = point->getX() - 2;
-    int j = point->getY() + 2;
+  if (checkValueAt(!isWhite, point.getX() - 1, point.getY() + 1)) {
+    int i = point.getX() - 2;
+    int j = point.getY() + 2;
     while ((i >= 0) && (j < getCol())) {
       if (checkValueAt(!isWhite, i, j)) {
         i--;
@@ -152,7 +152,7 @@ void Board::updateTheSlantOfBoard(Point* point, bool isWhite) {
       if (checkValueAt(isWhite, i, j)) {
         int k = i + 1;
         int l = j - 1;
-        while (k <= point->getX()) {
+        while (k <= point.getX()) {
           setValueAccordingPlayerAt(isWhite, k, l);
           k++;
           l--;
@@ -163,9 +163,9 @@ void Board::updateTheSlantOfBoard(Point* point, bool isWhite) {
   }
 
   //update the slant - uper row under col
-  if (checkValueAt(!isWhite, point->getX() + 1, point->getY() - 1)) {
-    int i = point->getX() + 2;
-    int j = point->getY() - 2;
+  if (checkValueAt(!isWhite, point.getX() + 1, point.getY() - 1)) {
+    int i = point.getX() + 2;
+    int j = point.getY() - 2;
     while ((i < getRow()) && (j >= 0)) {
       if (checkValueAt(!isWhite, i, j)) {
         i++;
@@ -175,7 +175,7 @@ void Board::updateTheSlantOfBoard(Point* point, bool isWhite) {
       if (checkValueAt(isWhite, i, j)) {
         int k = i - 1;
         int l = j + 1;
-        while (k >= point->getX()) {
+        while (k >= point.getX()) {
           setValueAccordingPlayerAt(isWhite, k, l);
           k--;
           l++;
@@ -186,9 +186,9 @@ void Board::updateTheSlantOfBoard(Point* point, bool isWhite) {
   }
 
   //update the slant - under row under col
-  if (checkValueAt(!isWhite, point->getX() - 1, point->getY() - 1)) {
-    int i = point->getX() - 2;
-    int j = point->getY() - 2;
+  if (checkValueAt(!isWhite, point.getX() - 1, point.getY() - 1)) {
+    int i = point.getX() - 2;
+    int j = point.getY() - 2;
     while ((i >= 0) && (j >= 0)) {
       if (checkValueAt(!isWhite, i, j)) {
         i--;
@@ -198,7 +198,7 @@ void Board::updateTheSlantOfBoard(Point* point, bool isWhite) {
       if (checkValueAt(isWhite, i, j)) {
         int k = i + 1;
         int l = j + 1;
-        while (k <= point->getX()) {
+        while (k <= point.getX()) {
           setValueAccordingPlayerAt(isWhite, k, l);
           k++;
           l++;
@@ -245,6 +245,15 @@ bool Board::checkValueAt(bool isWhite, int i, int j) const {
   }
 }
 
+void Board::initialWithAnotherBoard(Board* board) {
+  for (int i = 0; i < row; i++) {
+    for (int j = 0; j < col; j++) {
+      theBoard[i][j] = board->getValueAt(i, j);
+    }
+  }
+
+}
+
 void Board::initialBoard() {
   for (int i = 0; i < row; i++) {
     for (int j = 0; j < col; j++) {
@@ -260,3 +269,15 @@ void Board::initialBoard() {
   }
 }
 
+int Board::countSquaresOfPlayer(bool isWhite) {
+  int theNumOfSquares = 0;
+  for (int i = 0; i < row; i++) {
+    for (int j = 0; j < col; j++) {
+      if ((isWhite && (theBoard[i][j] == W))
+          || (!isWhite && theBoard[i][j] == B)) {
+        theNumOfSquares++;
+      }
+    }
+  }
+  return theNumOfSquares;
+}

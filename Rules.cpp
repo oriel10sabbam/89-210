@@ -9,8 +9,7 @@
 
 #include "Rules.h"
 
-Rules::Rules(const Board* board) :
-    board(board) {
+Rules::Rules() {
 }
 
 Rules::~Rules() {

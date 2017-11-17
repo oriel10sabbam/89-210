@@ -36,7 +36,7 @@ public:
   /*
    * view the Player class
    */
-  Point* doAMove() const;
+  Point doAMove();
 
 private:
 
@@ -45,7 +45,7 @@ private:
    * @ param s- a string
    * @ return true if the string id digit
    */
-  bool isDigit(string s) const;
+  bool isDigit(string s);
 
 };
 

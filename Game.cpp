@@ -24,25 +24,10 @@ Game::Game(Player* wPlayer, Player* bPlayer, Board* board1, Rules* rules1,
 }
 
 void Game::checkWhoWins() {
-  int counterWhite = 0;
-  int counterBlack = 0;
+  int counterWhite = board->countSquaresOfPlayer(true);
+  int counterBlack = board->countSquaresOfPlayer(false);
   bool theWhiteWins = false;
   bool theBlackWins = false;
-  for (int i = 0; i < board->getRow(); i++) {
-    for (int j = 0; j < board->getCol(); j++) {
-      switch (board->getValueAt(i, j)) {
-      case B:
-        counterBlack++;
-        break;
-      case W:
-        counterWhite++;
-        break;
-      case N:
-      case E:
-        break;
-      }
-    }
-  }
   if (counterWhite > counterBlack) {
     theWhiteWins = true;
   } else if ((counterWhite < counterBlack)) {
@@ -55,71 +40,47 @@ void Game::checkWhoWins() {
   grafic->printTheWiner(theWhiteWins, theBlackWins);
 }
 
-void Game::startTheGame() {
-  bool isTheWhiteMove = false;
-  while (remainingMoves) {
-    if (isTheWhiteMove) {
-      if (rules->areThePlayerHasALegalMove(true)) {
+bool Game::playOneTurn(Player* player, Point& point, bool& isTheWhiteMove) {
+  if (rules->areThePlayerHasALegalMove(player->isWhite(), board)) {
 
-        list<Point*> listOfPoints = rules->theLegalMovesOfPlayer(true);
-        grafic->printTheNewMove(true, listOfPoints);
-        listOfPoints.clear();
-        Point* point = whitePlayer->doAMove();
-        if (point->getX() != -1) {
-          if (rules->checkIfIsALegalMove(true, point)) {
-            board->updateTheBoard(point, true);
-            remainingMoves++;
-            isTheWhiteMove = false;
-          } else {
-            grafic->printAnErrorInputNotLegal(point);
-            delete point;
-            continue;
-          }
-        } else {
-          grafic->printAnErrorInputNotANum();
-          delete point;
-          continue;
-        }
-        delete point;
-      } else if (rules->areThePlayerHasALegalMove(false)) {
-        grafic->printNotPossibleMoves(true);
-        isTheWhiteMove = false;
-        continue;
+    list < Point > listOfPoints = rules->theLegalMovesOfPlayer(
+        player->isWhite(), board);
+    grafic->printTheNewMove(player->isWhite(), listOfPoints, point);
+    listOfPoints.clear();
+    point = player->doAMove();
+    if (point.getX() != -1) {
+      if (rules->checkIfIsALegalMove(player->isWhite(), point, board)) {
+        board->updateTheBoard(point, player->isWhite());
+        remainingMoves--;
+        isTheWhiteMove = !player->isWhite();
       } else {
-        break;
+        grafic->printAnErrorInputNotLegal(point);
+        point = Point(-1, -1);
       }
     } else {
-      if (rules->areThePlayerHasALegalMove(false)) {
+      grafic->printAnErrorInputNotANum();
+      point = Point(-1, -1);
+    }
+    return true;
+  } else if (rules->areThePlayerHasALegalMove(!player->isWhite(), board)) {
+    grafic->printNotPossibleMoves(player->isWhite());
+    isTheWhiteMove = !player->isWhite();
+    return true;
+  } else {
+    return false;
+  }
 
-        list<Point*> listOfPoints = rules->theLegalMovesOfPlayer(false);
-        grafic->printTheNewMove(false, listOfPoints);
-        listOfPoints.clear();
-        Point* point = blackPlayer->doAMove();
-        if (point->getX() != -1) {
-          if (rules->checkIfIsALegalMove(false, point)) {
-            board->updateTheBoard(point, false);
-            remainingMoves++;
-            isTheWhiteMove = true;
-          } else {
-            grafic->printAnErrorInputNotLegal(point);
-            delete point;
-            continue;
-          }
-        } else {
-          grafic->printAnErrorInputNotANum();
-          delete point;
-          continue;
-        }
-        delete point;
-      } else if (rules->areThePlayerHasALegalMove(true)) {
-        grafic->printNotPossibleMoves(false);
-        isTheWhiteMove = true;
-        continue;
-      } else {
-        break;
+}
 
-      }
-
+void Game::startTheGame() {
+  bool isTheWhiteMove = false;
+  Point point = Point(-1, -1);
+  bool weNeedToContinue = true;
+  while (remainingMoves && weNeedToContinue) {
+    if (isTheWhiteMove) {
+      weNeedToContinue = playOneTurn(whitePlayer, point, isTheWhiteMove);
+    } else {
+      weNeedToContinue = playOneTurn(blackPlayer, point, isTheWhiteMove);
     }
   }
   checkWhoWins();

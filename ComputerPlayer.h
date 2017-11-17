@@ -13,6 +13,7 @@
 #include "Player.h"
 #include <iostream>
 #include <string>
+#include <map>
 
 using namespace std;
 
@@ -25,6 +26,8 @@ public:
   /*
    * constructor of ComputerPlayer
    * @ param isWhite- true if it's the white player
+   * @ param board- a pointer to board
+   * @ param rules- a pointer to rules
    */
   ComputerPlayer(bool isWhite, Board* board, Rules* rules);
 
@@ -36,11 +39,29 @@ public:
   /*
    * DoAMove - the Player Do A Move, a virtual pure method
    */
-  virtual Point* doAMove();
+  virtual Point doAMove();
 
 private:
+
+  /*
+   * differenceSquares- return the difference Squares on a board
+   *  between the players
+   * @ param board- a pointer to board
+   */
+  int differenceSquares(Board* board);
+
+  /*
+   * getTheMinFromMap- return point with the minimum difference between the
+   * players from the map
+   * @ param mapPointToMax- a map from point to max value
+   * @ return- the point with the minimum difference between the
+   * players from the map
+   */
+  Point getTheMinFromMap(map<Point, int> mapPointToMax);
+
   Board* board;
-  Board* tempBoard;
+  Board* tempBoardComputer;
+  Board* tempBoardRival;
   Rules* rules;
 
 };
