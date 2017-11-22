@@ -12,6 +12,10 @@
 
 Board::Board(int row, int col) :
     row(row), col(col) {
+  if ((row < 2) || (col < 2)) {
+    throw std::range_error("range error, you try to create"
+        " a Board with row or col smaller than 2");
+  }
   theBoard = new Square*[row];
   for (int i = 0; i < row; i++) {
     theBoard[i] = new Square[col];
@@ -31,7 +35,6 @@ Board::Board(Board* board) {
       theBoard[i][j] = board->getValueAt(i, j);
     }
   }
-
 }
 
 Board::~Board() {
@@ -227,6 +230,10 @@ void Board::setValueAccordingPlayerAt(bool isWhite, int i, int j) {
 }
 
 void Board::setValueAt(int i, int j, Square square) {
+  if ((i < 0) || (i >= row) || (j < 0) || (j >= col)) {
+    throw std::range_error("range error, you try to get to value"
+        " that it's out of the range of Board");
+  }
   theBoard[i][j] = square;
 }
 
@@ -251,7 +258,6 @@ void Board::initialWithAnotherBoard(Board* board) {
       theBoard[i][j] = board->getValueAt(i, j);
     }
   }
-
 }
 
 void Board::initialBoard() {
@@ -259,8 +265,8 @@ void Board::initialBoard() {
     for (int j = 0; j < col; j++) {
       if ((i == j) && ((i == row / 2) || (i == (row / 2) - 1))) {
         theBoard[i][j] = W;
-      } else if (((i == (row / 2) - 1) && (j == row / 2))
-          || ((i == row / 2) && (j == (row / 2) - 1))) {
+      } else if (((i == (row / 2) - 1) && (j == col / 2))
+          || ((i == row / 2) && (j == (col / 2) - 1))) {
         theBoard[i][j] = B;
       } else {
         theBoard[i][j] = N;

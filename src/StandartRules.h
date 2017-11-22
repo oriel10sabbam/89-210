@@ -22,7 +22,6 @@ public:
 
   /*
    * constructor of StandartRulse
-   * @ param board- a poinetr to the board
    */
   StandartRules();
 
