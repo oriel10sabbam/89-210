@@ -5,8 +5,8 @@ a.out: compileAll
 	g++ *.o 
 	rm -f *.o
 
-compileAll: *.h *.cpp
-	g++ -c *.cpp
+compileAll: src/*.h src/*.cpp
+	g++ -c src/*.cpp
 
 run:
 	./a.out

@@ -14,9 +14,11 @@
 #include "ConsoleGrafic.h"
 #include "StandartRules.h"
 #include "ComputerPlayer.h"
+#define ROW 8
+#define COL 8
 
 int main() {
-  Board* board = new Board(6, 6);
+  Board* board = new Board(ROW, COL);
   Rules* rules = new StandartRules();
   Grafic* grafic = new ConsoleGrafic(board);
   TheRival theRival = grafic->printTheMenu();

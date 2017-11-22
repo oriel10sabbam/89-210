@@ -20,9 +20,16 @@ public:
    * default constructor of Point
    */
   Point();
-
+  /*
+   *  Operator Overloading to <
+   *  @ param p- the other point
+   */
   bool operator <(const Point& p) const;
 
+  /*
+   *  Operator Overloading to >
+   *  @ param p- the other point
+   */
   bool operator >(const Point& p) const;
 
   /*

@@ -56,8 +56,8 @@ Point ComputerPlayer::doAMove() {
   map<Point, int> mapPointToMax;
   for (list<Point>::iterator it = listOfPointsComputer.begin();
       it != listOfPointsComputer.end(); ++it) {
-    // cout << "\n for the Computer point (" << (*it)->getX() + 1 << ","
-    //   << (*it)->getY() + 1 << "): \n";
+    //cout << "\n for the Computer point (" << (*it).getX() + 1 << ","
+    //  << (*it).getY() + 1 << "): \n";
 
     tempBoardComputer->initialWithAnotherBoard(board);
     tempBoardComputer->updateTheBoard(*it, isWhite());
@@ -83,8 +83,8 @@ Point ComputerPlayer::doAMove() {
       mapPointToMax[*it] = theMaxSquaresRival;
       // cout << "\n       the Max of the Rivla: " << theMaxSquaresRival << endl;
     } else {
-      difference = differenceSquares(tempBoardComputer);
-      // cout << "\n       the Max of the Rivla: " << difference << endl;
+      difference = -999999;
+      //cout << "\n       the Max of the Rivla: " << difference << endl;
       mapPointToMax[*it] = difference;
     }
   }

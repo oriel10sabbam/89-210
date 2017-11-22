@@ -24,6 +24,8 @@ Point::~Point() {
 bool Point::operator <(const Point& p) const {
   if (getX() < p.getX()) {
     return true;
+  } else if ((getX() == p.getX()) && (getY() < p.getY())) {
+    return true;
   } else {
     return false;
   }
@@ -31,6 +33,8 @@ bool Point::operator <(const Point& p) const {
 
 bool Point::operator >(const Point& p) const {
   if (getX() > p.getX()) {
+    return true;
+  } else if ((getX() == p.getX()) && (getY() > p.getY())) {
     return true;
   } else {
     return false;
