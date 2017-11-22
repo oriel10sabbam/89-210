@@ -11,7 +11,7 @@
 #define C1 8
 #define R2 2
 #define C2 2
-Board b3 = NULL;
+Board b3 = Board(3, 3);
 
 // Check Out Of Range of initiation of Board
 TEST(BoardTest, CheckOutOfRangeIntial) {
