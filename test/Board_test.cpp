@@ -88,3 +88,4 @@ TEST(BoardTest, checkValueAtOutOfRange) {
   EXPECT_FALSE(b1.checkValueAt(true, -1, 0));
   EXPECT_FALSE(b1.checkValueAt(true, 0, C1));
 }
+//TODO need to add stress tests
