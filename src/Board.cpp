@@ -14,7 +14,7 @@
 Board::Board(int row, int col) :
     row(row), col(col) {
   if ((row < 2) || (col < 2)) {
-    throw std::range_error("range error, you try to create"
+    throw range_error("range error, you try to create"
         " a Board with row or col smaller than 2");
   }
   theBoard = new Square*[row];
@@ -232,7 +232,7 @@ void Board::setValueAccordingPlayerAt(bool isWhite, int i, int j) {
 
 void Board::setValueAt(int i, int j, Square square) {
   if ((i < 0) || (i >= row) || (j < 0) || (j >= col)) {
-    throw std::range_error("range error, you try to get to value"
+    throw range_error("range error, you try to get to value"
         " that it's out of the range of Board");
   }
   theBoard[i][j] = square;
