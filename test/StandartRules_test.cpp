@@ -216,13 +216,9 @@ TEST(StandartRulesTest, theLegalMovesOfPlayer3) {
     	}
     }
     listOfPointsFromFunction = sRules.theLegalMovesOfPlayer(isWhite,&b3);
-    for(unsigned int i=0;i<listOfCorrectPoints.size()-1;i++){
-    	EXPECT_TRUE(listOfPointsFromFunction.size()==0) << "The board is full"
-    			" but the function found options for the white player";
-    }
+    EXPECT_TRUE(listOfPointsFromFunction.size()==0) << "The board is full"
+  	" but the function found options for the white player";
     listOfPointsFromFunction = sRules.theLegalMovesOfPlayer(!isWhite,&b3);
-    for(unsigned int i=0;i<listOfCorrectPoints.size()-1;i++){
-      	EXPECT_TRUE(listOfPointsFromFunction.size()==0) << "The board is full"
-      		" but the function found options for the black player";
-    }
+    EXPECT_TRUE(listOfPointsFromFunction.size()==0) << "The board is full"
+    " but the function found options for the black player";
 }
