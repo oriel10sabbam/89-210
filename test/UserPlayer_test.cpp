@@ -1,14 +1,17 @@
 /*
+ * names: oriel sabban, guy zach
+ * id's:  201052602, 203953195
+ *
  * UserPlayer_test.cpp
  *
  *  Created on: Nov 26, 2017
  *      Author: guyzach
  */
+/*
 
-
-#include "gtest/gtest.h"
-#include "UserPlayer.h"
-#include "Point.h"
+#include "../gtest_src/gtest/gtest.h"
+#include "../src/UserPlayer.h"
+#include "../src/Point.h"
 #define R1 8
 #define C1 8
 using namespace std;
@@ -41,3 +44,4 @@ TEST(UserPlayerTest, isDigitChack) {
 	uP.isDigit(str8);
 	EXPECT_FALSE(uP.isDigit(str8));
 }
+*/

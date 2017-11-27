@@ -1,12 +1,15 @@
 /*
+ * names: oriel sabban, guy zach
+ * id's:  201052602, 203953195
+ *
  * Board_test.cpp
  *
  *  Created on: Nov 22, 2017
  *      Author: oriel
  */
 
-#include "gtest/gtest.h"
-#include "Board.h"
+#include "../gtest_src/gtest/gtest.h"
+#include "../src/Board.h"
 #define R1 8
 #define C1 8
 #define R2 2

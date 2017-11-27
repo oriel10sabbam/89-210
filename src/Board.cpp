@@ -1,11 +1,12 @@
 /*
  *
- * name :    oriel sabban
- * id   :    201052602
+ * names: oriel sabban, guy zach
+ * id's:  201052602, 203953195
+ *
  * Board.cpp
  *
  *  Created on: Oct 24, 2017
- *      Author: oriel, gay zah
+ *      Author: oriel, gay zach
  */
 
 #include "Board.h"

@@ -1,4 +1,7 @@
 /*
+ * names: oriel sabban, guy zach
+ * id's:  201052602, 203953195
+ *
  * ComputerPlayer.cpp
  *
  *  Created on: Nov 15, 2017

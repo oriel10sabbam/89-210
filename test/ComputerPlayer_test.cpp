@@ -1,15 +1,18 @@
 /*
+ * names: oriel sabban, guy zach
+ * id's:  201052602, 203953195
+ *
  * ComputerPlayer_test.cpp
  *
  *  Created on: Nov 22, 2017
  *      Author: oriel
  */
 
-#include "gtest/gtest.h"
-#include "ComputerPlayer.h"
-#include "StandartRules.h"
-#include "Board.h"
-#include "Point.h"
+#include "../gtest_src/gtest/gtest.h"
+#include "../src/ComputerPlayer.h"
+#include "../src/StandartRules.h"
+#include "../src/Board.h"
+#include "../src/Point.h"
 #include <list>
 #define R1 8
 #define C1 8

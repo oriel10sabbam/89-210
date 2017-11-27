@@ -1,6 +1,6 @@
 /*
- * name :    oriel sabban
- * id   :    201052602
+ * names: oriel sabban, guy zach
+ * id's:  201052602, 203953195
  *
  * main.cpp
  *
@@ -39,4 +39,3 @@ int main() {
 
   return 0;
 }
-

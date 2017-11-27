@@ -1,5 +1,7 @@
 /*
- * name :   oriel sabban
+ * names: oriel sabban, guy zach
+ * id's:  201052602, 203953195
+ *
  * id   :   201052602
  * Rules.cpp
  *

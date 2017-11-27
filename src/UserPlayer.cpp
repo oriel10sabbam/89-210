@@ -1,6 +1,7 @@
 /*
- * name :   oriel sabban
- * id   :   201052602
+ * names: oriel sabban, guy zach
+ * id's:  201052602, 203953195
+ *
  * UserPlayer.cpp
  *
  *  Created on: Oct 30, 2017

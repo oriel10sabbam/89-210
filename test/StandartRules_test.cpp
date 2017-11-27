@@ -4,11 +4,11 @@
  *  Created on: Nov 26, 2017
  *      Author: guyzach
  */
-#include "gtest/gtest.h"
-#include "ComputerPlayer.h"
-#include "StandartRules.h"
-#include "Board.h"
-#include "Point.h"
+#include "../gtest_src/gtest/gtest.h"
+#include "../src/ComputerPlayer.h"
+#include "../src/StandartRules.h"
+#include "../src/Board.h"
+#include "../src/Point.h"
 #include <list>
 #define R1 8
 #define C1 8
@@ -41,10 +41,9 @@ TEST(StandartRulesTest, theLegalMovesOfPlayer1) {
 
     listOfPointsFromFunction = sRules.theLegalMovesOfPlayer(isWhite,&b3);
 
-    for(unsigned int i=0;i<listOfCorrectPoints.size()-1;i++){
-    	Point p=listOfCorrectPoints[i];
-    	EXPECT_TRUE(checkIfPointInList(p, listOfPointsFromFunction)) << "the Point ("
-    		<< p.getX() << "," << p.getY() << ") is an option, but not recognized as one";
+    for (list<Point>::iterator it = listOfCorrectPoints.begin();it != listOfCorrectPoints.end(); ++it) {
+    	EXPECT_TRUE(checkIfPointInList(*it, listOfPointsFromFunction)) << "the Point ("
+    	<< it->getX() << "," << it->getY() << ") is an option, but not recognized as one";
     }
 }
 //Check full board
@@ -94,14 +93,13 @@ TEST(StandartRulesTest, theLegalMovesOfPlayer3) {
     }
     listOfCorrectPoints.push_back(Point(7, 7));
     listOfPointsFromFunction = sRules.theLegalMovesOfPlayer(!isWhite,&b3);
-    for(unsigned int i=0;i<listOfCorrectPoints.size()-1;i++){
-       	Point p=listOfCorrectPoints[i];
-        EXPECT_TRUE(checkIfPointInList(p, listOfPointsFromFunction)) << "the Point ("
-        	<< p.getX() << "," << p.getY() << ") is an option, but not recognized as one";
+
+    for (list<Point>::iterator it = listOfCorrectPoints.begin(); it != listOfCorrectPoints.end(); ++it) {
+        EXPECT_TRUE(checkIfPointInList(*it, listOfPointsFromFunction)) << "the Point ("
+        	<< it->getX() << "," << it->getY() << ") is an option, but not recognized as one";
     }
 }
 //Check the method bool areThePlayerHasALegalMove(bool isWhite, Board* board) const
-//Check starting board
 TEST(StandartRulesTest, areThePlayerHasALegalMove1) {
 	bool isWhite=true;
 	Board b3 = Board(R1, C1);
