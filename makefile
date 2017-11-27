@@ -1,5 +1,5 @@
-# name	: 	oriel sabban
-# id 	:	201052602
+# names	: 	oriel sabban, guy zach
+# ids 	:	201052602, 203953195
 
 a.out: compileAll
 	g++ *.o 
