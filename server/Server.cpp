@@ -24,9 +24,11 @@ void Server::start() {
   bzero((void *) &serverAddress, sizeof(serverAddress));
   serverAddress.sin_family = AF_INET;
 
-//  struct iphdr ip;
-//  cout << INADDR_ANY << endl;
-  serverAddress.sin_addr.s_addr = inet_addr("127.0.0.1"); //inet_addr("127.0.0.1");// inet_addr("95.86.112.226"); //INADDR_ANY; "127.0.0.1"
+  struct hostent *ptrh;
+  ptrh = gethostbyname("127.0.0.1");
+  memcpy(&serverAddress.sin_addr, ptrh->h_addr, ptrh->h_length);
+
+//  serverAddress.sin_addr.s_addr = inet_addr("127.0.0.1"); //inet_addr("127.0.0.1");// inet_addr("95.86.112.226"); //INADDR_ANY; "127.0.0.1"
   serverAddress.sin_port = htons(port);
   if (bind(serverSocket, (struct sockaddr *) &serverAddress,
       sizeof(serverAddress)) == -1) {
@@ -34,7 +36,8 @@ void Server::start() {
   }
   // Start listening to incoming connections
   listen(serverSocket, MAX_CONNECTED_CLIENTS);
-  // Define the client socket's structures
+
+  // Define the clients socket's structures
   struct sockaddr_in clientAddress1;
   struct sockaddr_in clientAddress2;
   socklen_t clientAddressLen1;
@@ -50,9 +53,6 @@ void Server::start() {
 
     cout << "Client1 connected" << endl;
 
-    //string s = "";
-//  n = read(clientSocket1, &s, sizeof(s));
-
     int clientSocket2 = accept(serverSocket,
         (struct sockaddr *) &clientAddress2, &clientAddressLen2);
 
@@ -61,10 +61,7 @@ void Server::start() {
 
     cout << "Client2 connected" << endl;
 
-    //string one = "1";
-
     int n;
-//  char message[256] = "1";
     int message = 1;
     n = write(clientSocket1, &message, sizeof(message));
     if (n == -1) {
@@ -73,7 +70,6 @@ void Server::start() {
     }
     cout << "Success writing to clientSocket1" << endl;
 
-//  sprintf(message, "2");
     message = 2;
     n = write(clientSocket2, &message, sizeof(message));
     if (n == -1) {
@@ -91,52 +87,39 @@ void Server::start() {
 
 // start The Game
 void Server::startTheGame(int clientSocket1, int clientSocket2) {
-//  char message[MAX] = {0};
   int message;
 
   do {
+    //get two message for X and Y of point from clientSocket1
     for (int i = 0; i < 2; i++) {
-      int n = read(clientSocket1, &message, sizeof(message));
-      if (n == -1) {
-        throw "Error reading message\n";
-      }
-      //    if (strcmp(message, "End") == 0) {
+      getMessage(clientSocket1, message);
+      //if we get -2 it is mean End of game so we do not need
+      //to continue get the other message
       if (message == -2) {
         cout << "clientSocket1 end the game \n";
         break;
       }
 
-      //    if (strcmp(message, "NoMove") != 0) {
-      n = write(clientSocket2, &message, sizeof(message));
-      if (n == -1) {
-        throw "Error writing to socket\n";
-      }
-
+      sendMessege(clientSocket2, message);
+      //if we get -1 it is mean NoMove so we do not need
+      //to continue get the other message
       if (message == -1) {
         break;
       }
-
     }
+    //if we get -2 it is mean End of game so we need to stop the game
     if (message == -2) {
       break;
     }
 
     for (int i = 0; i < 2; i++) {
-      int n = read(clientSocket2, &message, sizeof(message));
-      if (n == -1) {
-        throw "Error reading message\n";
-      }
-//		if (strcmp(message, "End") == 0) {
+      getMessage(clientSocket2, message);
       if (message == -2) {
         cout << "clientSocket2 end the game \n";
         break;
       }
 
-//		if (strcmp(message, "NoMove") != 0) {
-      n = write(clientSocket1, &message, sizeof(message));
-      if (n == -1) {
-        throw "Error writing to socket\n";
-      }
+      sendMessege(clientSocket1, message);
       if (message == -1) {
         break;
       }
@@ -148,18 +131,19 @@ void Server::startTheGame(int clientSocket1, int clientSocket2) {
   } while (true);
 }
 
-void Server::getMessage(int clientSocket, char* message[MAX]) {
+void Server::getMessage(int clientSocket, int& message) {
   int n = read(clientSocket, &message, sizeof(message));
   if (n == -1) {
     throw "Error reading message\n";
   }
 }
-void Server::sendMessege(int clientSocket, char message[MAX]) {
+void Server::sendMessege(int clientSocket, int& message) {
   int n = write(clientSocket, &message, sizeof(message));
   if (n == -1) {
     throw "Error writing to socket\n";
   }
 }
+
 void Server::stop() {
   close (serverSocket);
 }

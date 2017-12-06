@@ -21,3 +21,7 @@ bool Player::isWhite() {
   return isWhitePlayer;
 }
 
+bool Player::isRemote() {
+  return false;
+}
+

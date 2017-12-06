@@ -17,7 +17,7 @@
 #include <stdlib.h>
 using namespace std;
 int main() {
-  Server server(10001);
+  Server server(10008);
   try {
     server.start();
   } catch (const char * msg) {

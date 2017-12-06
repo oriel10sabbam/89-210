@@ -40,6 +40,11 @@ public:
    */
   bool isWhite();
 
+  /*
+   * isRemote - returm true if it's the remote player
+   */
+  virtual bool isRemote();
+
 protected:
   bool isWhitePlayer;
 };

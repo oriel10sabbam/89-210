@@ -18,6 +18,12 @@ ConsoleGrafic::ConsoleGrafic(Board* board) :
 ConsoleGrafic::~ConsoleGrafic() {
 }
 
+void ConsoleGrafic::printRemoteScreen() const {
+  printTheBoard();
+  printAMessage("waiting for other player's move... \n");
+
+}
+
 void ConsoleGrafic::printNotPossibleMoves(bool isWhite) const {
   printTheBoard();
   if (isWhite) {
@@ -51,22 +57,25 @@ TheRival ConsoleGrafic::printTheMenu() const {
     if (i) {
       printAMessage("you insert wrong input, please enter c or h only \n");
     }
-    printAMessage("Please choose your"
-        " competitor \n if you want to compete against a computer press c"
-        " \n if you want to compete against a human player press h \n");
+    printAMessage("Choose an opponent type: \n"
+        "1. a human local player \n"
+        "2. an AI player \n"
+        "3. a remote player \n");
     cin >> c;
     i++;
     if (c.size() > 1) {
       continue;
     }
-    if ((c.at(0) == 'c') || (c.at(0) == 'h')) {
+    if ((c.at(0) == '1') || (c.at(0) == '2') || (c.at(0) == '3')) {
       break;
     }
   } while (true);
-  if (c.at(0) == 'c') {
+  if (c.at(0) == '1') {
+    return H;
+  } else if (c.at(0) == '2') {
     return C;
   } else {
-    return H;
+    return R;
   }
 }
 

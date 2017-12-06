@@ -14,6 +14,7 @@
 #include "Rules.h"
 #include "Grafic.h"
 #include "Point.h"
+#include "Client.h"
 #include <string.h>
 #include <stdio.h>
 #include <list>
@@ -34,7 +35,7 @@ public:
    * @ param grafic1 - the grafic of the game
    */
   Game(Player* wPlayer, Player* bPlayer, Board* board1, Rules* rules1,
-      Grafic* grafic1);
+      Grafic* grafic1, Client* client1);
 
   /*
    * Destructor of Game
@@ -44,7 +45,12 @@ public:
   /*
    * startTheGame- start The   reversi Game
    */
-  void startTheGame();
+  void startTheGame(bool isRemoteGame);
+
+  /*
+   * startTheGame- start The   reversi Game
+   */
+  void startTheRemoteGame();
 
 private:
 
@@ -53,6 +59,9 @@ private:
    * @ param player- the player that do the move
    */
   bool playOneTurn(Player* player, Point& theLastPoint, bool& isTheWhiteMove);
+
+  bool playOneRemoteTurn(Player* player, Point& theLastPoint,
+      bool& isTheWhiteMove);
 
   /*
    * checkWhoWins- check Who Win the game
@@ -65,6 +74,7 @@ private:
   const Rules* rules;
   const Grafic* grafic;
   int remainingMoves;
+  Client* client;
 };
 
 #endif /* GAME_H_ */

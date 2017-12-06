@@ -1,0 +1,3 @@
+names	: oriel sabban	, guy zach
+id's	:  201052602	, 203953195
+tirgul	: 05		,	05

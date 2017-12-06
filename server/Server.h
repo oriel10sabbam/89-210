@@ -34,8 +34,8 @@ private:
   int serverSocket;
   // the socket's file descriptor
   void startTheGame(int clientSocket1, int clientSocket2);
-  void getMessage(int clientSocket, char* message[MAX]);
-  void sendMessege(int clientSocket, char message[MAX]);
+  void getMessage(int clientSocket, int& message);
+  void sendMessege(int clientSocket, int& message);
 };
 
 #endif /* SERVER_SERVER_H_ */

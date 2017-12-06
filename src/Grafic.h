@@ -19,7 +19,7 @@
 using namespace std;
 
 enum TheRival {
-  C, H
+  C, H, R
 };
 //C- Computer, H- human
 /*
@@ -95,7 +95,13 @@ public:
    */
   virtual void printNotPossibleMoves(bool isWhite) const = 0;
 
+  /*
+   * printRemoteScreen- print to the screen that it's the the Remote Player turn
+   * @ param isWhite- true if the player is white
+   */
+  virtual void printRemoteScreen() const = 0;
 protected:
+
   Board* board;
 
 };
