@@ -9,7 +9,8 @@
 #define SRC_REMOTEPLAYER_H_
 #include "Client.h"
 #include "Player.h"
-
+#include <iostream>
+#include <stdlib.h>
 using namespace std;
 
 /*

@@ -15,9 +15,10 @@
 #include<unistd.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
-const int MAX = 256;
+
 Client::Client(const char * serverIP, int serverPort) :
     serverIP(serverIP), serverPort(serverPort), clientSocket(0) {
 }
@@ -35,7 +36,8 @@ void Client::sendMessage(int message) {
   // Write the exercise arguments to the socket
   int n = write(clientSocket, &message, sizeof(message));
   if (n == -1) {
-    throw "Error writing message to socket";
+    cout << "error send Message." << endl;
+    exit(-1);
   }
 }
 

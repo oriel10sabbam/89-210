@@ -1,0 +1,48 @@
+/*
+ * Cliect.h
+ *
+ *  Created on: Dec 4, 2017
+ *      Author: oriel
+ */
+
+#ifndef CLIENT_H_
+#define CLIENT_H_
+
+/*
+ * this class represent the Client, the goal of this class
+ * is to Communicate with the server
+ */
+
+class Client {
+public:
+  /*
+   *  constructor of Client
+   * @ param serverIP- the server IP
+   * @ param serverPort- serverPort
+   */
+  Client(const char * serverIP, int serverPort);
+
+  /*
+   * connectToServer- this method connect to the server
+   * return- 1 or 2, 1- if this client connect first, 2- otherwise.
+   */
+  int connectToServer();
+
+  /*
+   * getMessage- get Message from the server
+   * return- the int message
+   */
+  int getMessage();
+
+  /*
+   * sendMessage- send Message to the server
+   */
+  void sendMessage(int Message);
+
+private:
+  const char * serverIP;
+  int serverPort;
+  int clientSocket;
+};
+
+#endif /* CLIENT_H_ */

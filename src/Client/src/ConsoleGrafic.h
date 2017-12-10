@@ -88,7 +88,6 @@ public:
 
   /*
    * printRemoteScreen- print to the screen that it's the the Remote Player turn
-   * @ param isWhite- true if the player is white
    */
   virtual void printRemoteScreen() const;
 

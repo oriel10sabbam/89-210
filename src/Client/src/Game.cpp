@@ -8,6 +8,7 @@
  */
 
 #include "Game.h"
+#include <stdlib.h>
 
 Game::~Game() {
 
@@ -57,8 +58,14 @@ bool Game::playOneRemoteTurn(Player* player, Point& point,
         if (rules->checkIfIsALegalMove(player->isWhite(), point, board)) {
           board->updateTheBoard(point, player->isWhite());
           // sending to the remote player the move
-          client->sendMessage(point.getX());
-          client->sendMessage(point.getY());
+          try {
+            client->sendMessage(point.getX());
+            client->sendMessage(point.getY());
+          } catch (const char * msg) {
+            cout << "error send Message. Reason: " << msg << endl;
+            exit(-1);
+          }
+
           remainingMoves--;
           isTheWhiteMove = !player->isWhite();
         } else {
@@ -73,12 +80,23 @@ bool Game::playOneRemoteTurn(Player* player, Point& point,
     } else if (rules->areThePlayerHasALegalMove(!player->isWhite(), board)) {
       grafic->printNotPossibleMoves(player->isWhite());
       // send -1 that means Not Possible Moves
-      client->sendMessage(-1);
+      try {
+        client->sendMessage(-1);
+      } catch (const char * msg) {
+        cout << "error send Message. Reason: " << msg << endl;
+        exit(-1);
+      }
+
       isTheWhiteMove = !player->isWhite();
       return true;
     } else {
       // send -2 that means end of game
-      client->sendMessage(-2);
+      try {
+        client->sendMessage(-2);
+      } catch (const char * msg) {
+        cout << "error send Message. Reason: " << msg << endl;
+        exit(-1);
+      }
       return false;
     }
   } else {
@@ -138,7 +156,7 @@ void Game::startTheGame(bool isRemoteGame) {
   bool isTheWhiteMove = false;
   Point point = Point(-1, -1);
   bool weNeedToContinue = true;
-  while (/*remainingMoves &&*/weNeedToContinue) {
+  while (weNeedToContinue) {
 
     if (isTheWhiteMove && !isRemoteGame) {
       weNeedToContinue = playOneTurn(whitePlayer, point, isTheWhiteMove);

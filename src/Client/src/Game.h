@@ -33,6 +33,7 @@ public:
    * @ param board1 - the board
    * @ param rules1 - the rules of the game
    * @ param grafic1 - the grafic of the game
+   * @ param client1 - the client of the game
    */
   Game(Player* wPlayer, Player* bPlayer, Board* board1, Rules* rules1,
       Grafic* grafic1, Client* client1);
@@ -43,12 +44,12 @@ public:
   virtual ~Game();
 
   /*
-   * startTheGame- start The   reversi Game
+   * startTheGame- start The reversi Game
    */
   void startTheGame(bool isRemoteGame);
 
   /*
-   * startTheGame- start The   reversi Game
+   * startTheRemoteGame- start The Remote Reversi Game
    */
   void startTheRemoteGame();
 
@@ -57,9 +58,17 @@ private:
   /*
    * playOneTurn- play one turn of the game
    * @ param player- the player that do the move
+   * @ param theLastPoint- the Last Point (the last move)
+   * @ param isTheWhiteMove- true if is The White Move
    */
   bool playOneTurn(Player* player, Point& theLastPoint, bool& isTheWhiteMove);
 
+  /*
+   * playOneRemoteTurn- play One Turn of the Remote game
+   * @ param player- the player that do the move
+   * @ param theLastPoint- the Last Point (the last move)
+   * @ param isTheWhiteMove- true if is The White Move
+   */
   bool playOneRemoteTurn(Player* player, Point& theLastPoint,
       bool& isTheWhiteMove);
 

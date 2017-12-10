@@ -16,6 +16,10 @@
 #include "ConsoleGrafic.h"
 #include "StandartRules.h"
 #include "Client.h"
+#include<fstream>
+#include <string.h>
+#include <iostream>
+
 #define ROW 4
 #define COL 4
 
@@ -26,7 +30,26 @@ int main() {
   TheRival theRival = grafic->printTheMenu();
   Player* whitePlayer;
   Player* blackPlayer;
-  Client client("127.0.0.1"/*"95.86.112.226"*/, 10008);
+
+  ifstream inFile;
+  try {
+    inFile.open("./definition_client.txt");
+  } catch (const char * msg) {
+    cout << "error open the definition_client.txt" << msg << endl;
+    return (-1);
+  }
+
+  int port;
+  string ip;
+
+  if (inFile.is_open()) {
+    inFile >> port;
+    inFile >> ip;
+  } else {
+    throw "error open the definition_client.txt";
+  }
+
+  Client client(ip.c_str()/*"127.0.0.1""95.86.112.226"*/, port);
   Client* pClient = &(client);
 
   bool isRemoteGame = false;
@@ -43,7 +66,13 @@ int main() {
     isRemoteGame = true;
     grafic->printAMessage("connected to server \n");
     grafic->printAMessage("waiting for other player to join.. \n");
-    int whiteOrBlack = client.connectToServer();
+    int whiteOrBlack;
+    try {
+      whiteOrBlack = client.connectToServer();
+    } catch (const char * msg) {
+      cout << "error at connect to server. Reason: " << msg << endl;
+      return (-1);
+    }
 
     if (whiteOrBlack == 1) {
       blackPlayer = new UserPlayer(false);
@@ -55,8 +84,16 @@ int main() {
 
     }
   }
+
   Game game = Game(whitePlayer, blackPlayer, board, rules, grafic, pClient);
-  game.startTheGame(isRemoteGame);
+
+  try {
+    game.startTheGame(isRemoteGame);
+  } catch (const char * msg) {
+    cout << "error at play the Reversi Game. Reason: " << msg << endl;
+    return (-1);
+  }
+
   delete whitePlayer;
   delete blackPlayer;
   delete board;
