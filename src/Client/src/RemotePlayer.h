@@ -11,6 +11,13 @@
 #include "Player.h"
 #include <iostream>
 #include <stdlib.h>
+#include <sstream>
+#include <iterator>
+#include <errno.h>
+#include <string>
+#include <list>
+#include <vector>
+
 using namespace std;
 
 /*
@@ -28,12 +35,21 @@ public:
   virtual Point doAMove();
 
   /*
-   * isRemote - returm true if it's the remote player
+   * isRemote - return true if it's the remote player
    */
   virtual bool isRemote();
 
 private:
   Client client;
+
+  /*
+   * splitBySpace - split string by space
+   * @ param str- the string to split
+   * @ return - the value of split in vector
+   *
+   */
+  vector<int> splitBySpace(string str);
+
 };
 
 #endif /* SRC_REMOTEPLAYER_H_ */

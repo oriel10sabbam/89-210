@@ -7,7 +7,9 @@
 
 #ifndef CLIENT_H_
 #define CLIENT_H_
-
+#include <string>
+#include <string.h>
+using namespace std;
 /*
  * this class represent the Client, the goal of this class
  * is to Communicate with the server
@@ -28,6 +30,9 @@ public:
    */
   int connectToServer();
 
+  char getCharMessage();
+
+  void sendCharMessage(string message/*[]*/);
   /*
    * getMessage- get Message from the server
    * return- the int message

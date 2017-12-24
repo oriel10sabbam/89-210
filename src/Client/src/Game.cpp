@@ -9,6 +9,11 @@
 
 #include "Game.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include <string>
+#include <sstream>
+#include <unistd.h>
+const long int MAX = 256;
 
 Game::~Game() {
 
@@ -59,8 +64,16 @@ bool Game::playOneRemoteTurn(Player* player, Point& point,
           board->updateTheBoard(point, player->isWhite());
           // sending to the remote player the move
           try {
-            client->sendMessage(point.getX());
-            client->sendMessage(point.getY());
+            std::stringstream xMessage;
+            std::stringstream yMessage;
+            xMessage << point.getX();
+            yMessage << point.getY();
+
+            string MessageS = "play " + xMessage.str() + " " + yMessage.str();
+
+            cout << "sendCharXMessage " << MessageS << endl;
+
+            client->sendCharMessage(MessageS);
           } catch (const char * msg) {
             cout << "error send Message. Reason: " << msg << endl;
             exit(-1);
@@ -81,7 +94,8 @@ bool Game::playOneRemoteTurn(Player* player, Point& point,
       grafic->printNotPossibleMoves(player->isWhite());
       // send -1 that means Not Possible Moves
       try {
-        client->sendMessage(-1);
+//        client->sendMessage(-1);
+        client->sendCharMessage("play NoMove NoMove");
       } catch (const char * msg) {
         cout << "error send Message. Reason: " << msg << endl;
         exit(-1);
@@ -92,14 +106,20 @@ bool Game::playOneRemoteTurn(Player* player, Point& point,
     } else {
       // send -2 that means end of game
       try {
-        client->sendMessage(-2);
+//        client->sendMessage(-2);
+        client->sendCharMessage("play End End");
+        return false;
       } catch (const char * msg) {
         cout << "error send Message. Reason: " << msg << endl;
         exit(-1);
       }
-      return false;
     }
   } else {
+    if ((!rules->areThePlayerHasALegalMove(player->isWhite(), board))
+        && (!rules->areThePlayerHasALegalMove(!player->isWhite(), board))) {
+      sleep(1);
+      return false;
+    }
     Point newPoint = Point(-20, -20);
     grafic->printRemoteScreen();
     newPoint = player->doAMove();

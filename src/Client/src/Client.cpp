@@ -11,16 +11,44 @@
 #include<netinet/in.h>
 #include<arpa/inet.h>
 #include<netdb.h>
-#include<string.h>
 #include<unistd.h>
-#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-using namespace std;
+const long int MAX = 2;
 
 Client::Client(const char * serverIP, int serverPort) :
     serverIP(serverIP), serverPort(serverPort), clientSocket(0) {
+}
+
+char Client::getCharMessage() {
+  char result; //[MAX];
+  int n = read(clientSocket, &result, sizeof(result));
+  if (n == -1) {
+    throw "Error reading result from socket2";
+  }
+  //char* strResult = result;
+  return result; //strResult;
+}
+
+void Client::sendCharMessage(string message) {
+  // Write the exercise arguments to the socket
+
+  int len = message.length();
+  int i = 0;
+  char m;
+  sendMessage(len);
+  while (i < len) {
+    m = message[i];
+    int n = write(clientSocket, &m, sizeof(m));
+    if (n == -1) {
+      std::cout << "error send Message." << std::endl;
+      exit(-1);
+    }
+
+    i++;
+  }
+
+  cout << "sending the message: " << message << endl;
 }
 
 int Client::getMessage() {
@@ -36,7 +64,7 @@ void Client::sendMessage(int message) {
   // Write the exercise arguments to the socket
   int n = write(clientSocket, &message, sizeof(message));
   if (n == -1) {
-    cout << "error send Message." << endl;
+    std::cout << "error send Message." << std::endl;
     exit(-1);
   }
 }

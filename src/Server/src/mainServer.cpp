@@ -14,8 +14,15 @@
 #include <iostream>
 #include<fstream>
 #include <stdio.h>
-#include "Server.h"
 #include <stdlib.h>
+
+#include "Server.h"
+#include "Command.h"
+#include "CloseGameC.h"
+#include "JoinGameC.h"
+#include "ListGamesC.h"
+#include "PlayOneMoveC.h"
+#include "StartGameC.h"
 using namespace std;
 
 int main() {
@@ -37,6 +44,18 @@ int main() {
   }
 
   Server server(port);
+  map<string, Command*> commandsMap;
+
+  commandsMap["start"] = new StartGameC(&server);
+  commandsMap["list_games"] = new ListGamesC(&server);
+  commandsMap["join"] = new JoinGameC(&server);
+  commandsMap["play"] = new PlayOneMoveC(&server);
+  commandsMap["close"] = new CloseGameC(&server);
+
+  CommandsManager commandsManager(commandsMap);
+
+  server.setCommandManager(&commandsManager);
+
   try {
     server.start();
   } catch (const char * msg) {

@@ -6,11 +6,18 @@
  */
 
 #include "Server.h"
+#include <iostream>
+#include <sstream>
+#include <iterator>
+#include <errno.h>
 using namespace std;
+
 #define MAX_CONNECTED_CLIENTS 10
+const long int MAX = 2;
 
 Server::Server(int port) :
-    port(port), serverSocket(0) {
+    port(port), serverSocket(0), commandsManager(NULL) {
+  listOfGames.clear();
   cout << "Server" << endl;
 }
 
@@ -59,6 +66,8 @@ void Server::start() {
 
     int n;
     int message = 1;
+//    char message[MAX];
+//    sprintf(message, "%d", 1);
     n = write(clientSocket1, &message, sizeof(message));
     if (n == -1) {
       throw "Error writing to clientSocket1";
@@ -66,6 +75,7 @@ void Server::start() {
     }
     cout << "Success writing to clientSocket1" << endl;
 
+//    sprintf(message, "%d", 2);
     message = 2;
     n = write(clientSocket2, &message, sizeof(message));
     if (n == -1) {
@@ -73,6 +83,35 @@ void Server::start() {
       cout << "Error writing to clientSocket2" << endl;
     }
     cout << "Success writing to clientSocket2" << endl;
+
+    /*   n = read(clientSocket1, &message, sizeof(message));
+     if (n == -1) {
+     throw strcat("Error read to socket\n", strerror(errno));
+     }
+     cout << "read from clientSocket1 the message: " << message << endl;
+
+     cout << "Success writing to clientSocket2. size:"
+     << sizeof(message) / sizeof(message[0]) << endl;
+     n = write(clientSocket2, &message, sizeof(message) / sizeof(message[0]));
+     if (n == -1) {
+     throw strcat("Error writing to socket\n", strerror(errno));
+     }
+
+     cout << "Success read to clientSocket2. size:"
+     << sizeof(message) / sizeof(message[0]) << endl;
+     n = read(clientSocket2, &message, sizeof(message) / sizeof(message[0]));
+     if (n == -1) {
+     throw strcat("Error read to socket\n", strerror(errno));
+     }
+     cout << "read from clientSocket2 the message: " << message << endl;
+
+     cout << "Success writing to clientSocket1. size:"
+     << sizeof(message) / sizeof(message[0]) << endl;
+     n = write(clientSocket1, &message, sizeof(message) / sizeof(message[0]));
+     if (n == -1) {
+     throw strcat("Error writing to socket\n", strerror(errno));
+     }
+     */
 
     startTheGame(clientSocket1, clientSocket2);
     // Close communication with the clients
@@ -83,68 +122,265 @@ void Server::start() {
 
 // start The Game
 void Server::startTheGame(int clientSocket1, int clientSocket2) {
-  int message;
+  //int message;
+  string message; //[MAX] = "";
+  char m;
+  int num = 0;
 
   do {
-    //get two message for X and Y of point from clientSocket1
-    for (int i = 0; i < 2; i++) {
 
-      getMessage(clientSocket1, message);
-      //if we get -2 it is mean End of game so we do not need
-      //to continue get the other message
-      if (message == -2) {
-        cout << "clientSocket1 end the game \n";
-        break;
-      }
-
-      if (clientClosed(clientSocket1) || clientClosed(clientSocket2)) {
-        // if message == -10 then we know that one of the
-        // client Sockets is close, we send -10 to the other socket
-        // to tell him that the other socket is closed
-        message = -10;
-        sendMessage(clientSocket2, message);
-        cout << "one of the client Sockets is close \n";
-        break;
-      }
-      sendMessage(clientSocket2, message);
-      //if we get -1 it is mean NoMove so we do not need
-      //to continue get the other message
-      if (message == -1) {
-        break;
-      }
-    }
-    // if we get -2 or -10 it is mean End of game (or one of the players is
-    // closed) so we need to stop the game
-    if ((message == -2) || (message == -10)) {
-      break;
+    int n = read(clientSocket1, &num, sizeof(num));
+    if (n == -1) {
+      throw "Error writing to socket\n";
     }
 
-    for (int i = 0; i < 2; i++) {
+    int j = 0;
+    message = "";
+    while (j < num) {
 
-      getMessage(clientSocket2, message);
-      if (message == -2) {
-        cout << "clientSocket2 end the game \n";
-        break;
+      int n = read(clientSocket1, &m, sizeof(m));
+      if (n == -1) {
+        throw "Error writing to socket\n";
       }
+      message = message + m;
+      j++;
 
-      if (clientClosed(clientSocket1) || clientClosed(clientSocket2)) {
-        // if message == -10 then we know that one of the
-        // client Sockets is close
-        message = -10;
-        sendMessage(clientSocket1, message);
-        cout << "one of the client Sockets is close \n";
-        break;
-      }
-      sendMessage(clientSocket1, message);
-      if (message == -1) {
-        break;
-      }
-    }
-    if ((message == -2) || (message == -10)) {
-      break;
     }
 
+    vector < string > args = splitBySpace(message, clientSocket2);
+    commandsManager->executeCommand(args[0], args);
+
+    n = read(clientSocket2, &num, sizeof(num));
+    if (n == -1) {
+      throw "Error writing to socket\n";
+    }
+
+    j = 0;
+    message = "";
+    while (j < num) {
+
+      int n = read(clientSocket2, &m, sizeof(m));
+      if (n == -1) {
+        throw "Error writing to socket\n";
+      }
+      message = message + m;
+      j++;
+
+    }
+
+    args = splitBySpace(message, clientSocket1);
+    commandsManager->executeCommand(args[0], args);
+
+    /*
+     //get two message for X and Y of point from clientSocket1
+     for (int i = 0; i < 2; i++) {
+
+     int n = read(clientSocket1, &num, sizeof(num));
+     if (n == -1) {
+     throw "Error writing to socket\n";
+     }
+
+     int j = 0;
+     message = "";
+     while (j < num) {
+
+     int n = read(clientSocket1, &m, sizeof(m));
+     if (n == -1) {
+     throw "Error writing to socket\n";
+     }
+     message = message + m;
+     j++;
+
+     }
+
+     cout << "read from clientSocket1 the message: " << message
+     << " END OF MESSAGE" << endl;
+
+     if (message.compare("End") == 0) {
+     break;
+     }
+
+     //if we get "End" it is mean End of game so we do not need
+     //to continue get the other message
+
+     if (clientClosed(clientSocket1) || clientClosed(clientSocket2)) {
+     // if message == "clientClosed" then we know that one of the
+     // client Sockets is close, we send -10 to the other socket
+     // to tell him that the other socket is closed
+     message = "clientClosed";
+     n = write(clientSocket2, &message, MAX);
+     if (n == -1) {
+     throw "Error writing to socket\n";
+     }
+
+     cout << "one of the client Sockets is close \n";
+     break;
+     }
+
+     n = write(clientSocket2, &num, sizeof(num));
+     if (n == -1) {
+     throw "Error writing to socket\n";
+     }
+
+     j = 0;
+     while (j < num) {
+
+     m = message[j];
+     int n = write(clientSocket2, &m, sizeof(m));
+     if (n == -1) {
+     throw "Error writing to socket\n";
+     }
+     j++;
+
+     }
+
+     cout << "write to clientSocket2 the message: " << message
+     << " END OF MESSAGE" << endl;
+
+     if (message.compare("NoMove") == 0) {
+     break;
+     }
+
+     }
+
+     if ((message.compare("clientClosed") == 0)
+     || (message.compare("End") == 0)) {
+     break;
+     }
+
+     for (int i = 0; i < 2; i++) {
+
+     int n = read(clientSocket2, &num, sizeof(num));
+     if (n == -1) {
+     throw "Error writing to socket\n";
+     }
+
+     int j = 0;
+     message = "";
+     while (j < num) {
+
+     int n = read(clientSocket2, &m, sizeof(m));
+     if (n == -1) {
+     throw "Error writing to socket\n";
+     }
+     message = message + m;
+     j++;
+
+     }
+
+     cout << "read from clientSocket2 the message: " << message
+     << " END OF MESSAGE" << endl;
+
+     if (message.compare("End") == 0) {
+     break;
+     }
+
+     //if we get "End" it is mean End of game so we do not need
+     //to continue get the other message
+
+     if (clientClosed(clientSocket1) || clientClosed(clientSocket2)) {
+     // if message == "clientClosed" then we know that one of the
+     // client Sockets is close, we send -10 to the other socket
+     // to tell him that the other socket is closed
+
+     n = write(clientSocket1, &message, MAX);
+     if (n == -1) {
+     throw "Error writing to socket\n";
+     }
+
+     cout << "one of the client Sockets is close \n";
+     break;
+     }
+
+     n = write(clientSocket1, &num, sizeof(num));
+     if (n == -1) {
+     throw "Error writing to socket\n";
+     }
+
+     j = 0;
+     while (j < num) {
+
+     m = message[j];
+     int n = write(clientSocket1, &m, sizeof(m));
+     if (n == -1) {
+     throw "Error writing to socket\n";
+     }
+     j++;
+
+     }
+
+     cout << "write to clientSocket1 the message: " << message
+     << " END OF MESSAGE" << endl;
+
+     if (message.compare("NoMove") == 0) {
+     break;
+     }
+
+     /*
+
+
+
+
+     int n = read(clientSocket2, &message, MAX);
+     if (n == -1) {
+     throw "Error writing to socket\n";
+     }
+
+     cout << "read from clientSocket2 the message: " << message << endl;
+
+
+     if (clientClosed(clientSocket1) || clientClosed(clientSocket2)) {
+     // if message == "clientClosed" then we know that one of the
+     // client Sockets is close, we send -10 to the other socket
+     // to tell him that the other socket is closed
+
+     n = read(clientSocket1, &message, MAX);
+     if (n == -1) {
+     throw "Error writing to socket\n";
+     }
+
+     cout << "one of the client Sockets is close \n";
+     break;
+     }
+
+     n = write(clientSocket1, &message, MAX);
+     if (n == -1) {
+     throw "Error writing to socket\n";
+     }
+
+
+
+     if (strcmp(message, "NoMove") == 0) {
+     break;
+     }
+     }
+     if ((message.compare("clientClosed") == 0)
+     || (message.compare("End") == 0)) {
+     break;
+     }
+     */
   } while (true);
+}
+
+vector<string> Server::splitBySpace(string str, int clientsocket) {
+//  vector < string > args;
+//  args.clear();
+
+  std::istringstream buf(str);
+  std::istream_iterator<std::string> beg(buf), end;
+
+  std::vector < std::string > args(beg, end); // done!
+
+  std::stringstream numS;
+  numS << clientsocket;
+
+  args.push_back(numS.str());
+
+  for (vector<string>::iterator it = args.begin(); it != args.end(); it++) {
+    std::cout << '"' << *it << '"' << '\n';
+  }
+
+  return args;
 }
 
 void Server::getMessage(int clientSocket, int& message) {
@@ -172,6 +408,47 @@ bool Server::clientClosed(int clientSocket) {
     }
   }
   return false;
+}
+
+list<string> Server::getListOfGames() {
+  return listOfGames;
+}
+
+void Server::getCharMessage(int clientSocket, string message) {
+
+  int n = read(clientSocket, &message, sizeof(message));
+  if (n == -1) {
+    throw "Error writing to socket\n";
+  }
+}
+
+void Server::sendCharMessage(int clientSocket, string message) {
+
+  int num = message.length();
+
+  int n = write(clientSocket, &num, sizeof(num));
+  if (n == -1) {
+    throw "Error writing to socket\n";
+  }
+
+  int j = 0;
+  while (j < num) {
+
+    char m = message[j];
+    int n = write(clientSocket, &m, sizeof(m));
+    if (n == -1) {
+      throw "Error writing to socket\n";
+    }
+    j++;
+
+  }
+
+  cout << "write to clientSocket the message: " << message << " END OF MESSAGE"
+      << endl;
+}
+
+void Server::setCommandManager(CommandsManager* commandsManagerToSet) {
+  commandsManager = commandsManagerToSet;
 }
 
 void Server::stop() {
