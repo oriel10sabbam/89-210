@@ -53,9 +53,9 @@ int main() {
   commandsMap["play"] = new PlayOneMoveC(&server);
   commandsMap["close"] = new CloseGameC(&server);
 
-  CommandsManager commandsManager(commandsMap);
+  CommandsManager* commandsManager = new CommandsManager(commandsMap);
 
-  server.setCommandManager(&commandsManager);
+  server.setCommandManager(commandsManager);
 
   try {
     server.start();

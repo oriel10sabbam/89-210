@@ -200,6 +200,7 @@ void Server::waitForExit() {
       }
       pthread_mutex_unlock(&vector_thread_mutex);
 
+      delete commandsManager;
       break;
     } else {
       cout << "you write a wrong input, please write only 'exit'"
