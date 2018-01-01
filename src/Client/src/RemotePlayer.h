@@ -26,8 +26,16 @@ using namespace std;
 class RemotePlayer: public Player {
 public:
 
+  /*
+   * constructor of RemotePlayer
+   * @ param isWhite- true if is the white player
+   * @ param client- the client
+   */
   RemotePlayer(bool isWhite, Client& client);
 
+  /*
+   * Destructor of RemotePlayer
+   */
   virtual ~RemotePlayer();
   /*
    * DoAMove - the Player Do A Move, a virtual pure method

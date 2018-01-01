@@ -71,8 +71,6 @@ bool Game::playOneRemoteTurn(Player* player, Point& point,
 
             string MessageS = "play " + xMessage.str() + " " + yMessage.str();
 
-            cout << "sendCharXMessage " << MessageS << endl;
-
             client->sendCharMessage(MessageS);
           } catch (const char * msg) {
             cout << "error send Message. Reason: " << msg << endl;
@@ -92,9 +90,8 @@ bool Game::playOneRemoteTurn(Player* player, Point& point,
       return true;
     } else if (rules->areThePlayerHasALegalMove(!player->isWhite(), board)) {
       grafic->printNotPossibleMoves(player->isWhite());
-      // send -1 that means Not Possible Moves
+
       try {
-//        client->sendMessage(-1);
         client->sendCharMessage("play NoMove NoMove");
       } catch (const char * msg) {
         cout << "error send Message. Reason: " << msg << endl;
@@ -107,7 +104,7 @@ bool Game::playOneRemoteTurn(Player* player, Point& point,
       // send -2 that means end of game
       try {
 //        client->sendMessage(-2);
-        client->sendCharMessage("play End End");
+        client->sendCharMessage("close");
         return false;
       } catch (const char * msg) {
         cout << "error send Message. Reason: " << msg << endl;
@@ -117,7 +114,7 @@ bool Game::playOneRemoteTurn(Player* player, Point& point,
   } else {
     if ((!rules->areThePlayerHasALegalMove(player->isWhite(), board))
         && (!rules->areThePlayerHasALegalMove(!player->isWhite(), board))) {
-      sleep(1);
+//      sleep(2);
       return false;
     }
     Point newPoint = Point(-20, -20);

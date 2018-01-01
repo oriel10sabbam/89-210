@@ -12,14 +12,31 @@
 using namespace std;
 
 /*
- *
+ * StartGameC is the 'start a new game' command,
+ *  this class heir from the command class
  */
 class StartGameC: public Command {
 public:
-  StartGameC(Server* server);
+  /*
+   * constructor of StartGameC
+   * @ param server- the server of the game
+   */
+  StartGameC(map<string, int>* mapGameToClientsocket, Server* server);
+
+  /*
+   * desturctor of StartGameC
+   */
   virtual ~StartGameC();
+
+  /*
+   * execute- the execute of this command
+   * @param args- the arguments of this command
+   */
   virtual void execute(vector<string> args);
 private:
+
+  int setNeweGame(pair<string, int> pairGameSocket);
+  map<string, int>* mapGameToClientsocket;
   Server* server;
 };
 

@@ -21,7 +21,8 @@ using namespace std;
 enum TheRival {
   C, H, R
 };
-//C- Computer, H- human
+//C- Computer, H- human, R- remote
+
 /*
  * this class represents a Grafic, that responsible for the graphics. An Abstract class
  */
@@ -69,6 +70,12 @@ public:
    *  @return the rival that the user chose
    */
   virtual TheRival printTheMenu() const = 0;
+
+  /*
+   *  printTheRemoteMenu- print The Remote Menu
+   *  @return the message that the user choose
+   */
+  virtual string printTheRemoteMenu() const;
 
   /*
    * printTheNewMove- print The New Move, a virtual pure method

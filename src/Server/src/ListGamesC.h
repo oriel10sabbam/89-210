@@ -13,14 +13,34 @@
 using namespace std;
 
 /*
- *
+ * ListGamesC is the 'return list of games' command,
+ *  this class heir from the command class
  */
 class ListGamesC: public Command {
 public:
-  ListGamesC(Server* server);
+  /*
+   * constructor of ListGamesC
+   * @ param server- the server of the game
+   */
+  ListGamesC(map<string, int>* mapGameToClientsocket, Server* server);
+
+  /*
+   * desturctor of ListGamesC
+   */
   virtual ~ListGamesC();
+
+  /*
+   * execute- the execute of this command
+   * @param args- the arguments of this command
+   */
   virtual void execute(vector<string> args);
 private:
+  /*
+   * getStringOfGames - return string list of games
+   */
+  string getStringOfGames();
+
+  map<string, int>* mapGameToClientsocket;
   Server* server;
 
 };

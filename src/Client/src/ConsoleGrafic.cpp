@@ -79,6 +79,57 @@ TheRival ConsoleGrafic::printTheMenu() const {
   }
 }
 
+string ConsoleGrafic::printTheRemoteMenu() const {
+  printAMessage("this is the menu of the remote game \n\n");
+  string option, arg1;
+
+  int i = 0;
+  do {
+    if (i) {
+      printAMessage("you insert wrong input, please enter 1 or 2 or 3"
+          " (with arguments if needed)  only \n");
+    }
+    printAMessage("Choose an opponent type: \n"
+        "Please also bring the correct arguments if needed,"
+        " for example: 1 new_game5 \n"
+
+        "1. start a new game (give the name of the new game"
+        " you want to start)\n"
+
+        "2. for print the games you can join \n"
+
+        "3. join a game (give the name of the game you want to join) \n");
+
+    cin >> option;
+    i++;
+    if (option.size() > 1) {
+      continue;
+    }
+    if ((option.at(0) == '1') || (option.at(0) == '2')
+        || (option.at(0) == '3')) {
+      break;
+    }
+  } while (true);
+
+  string OptionString = "";
+  if (option.at(0) == '1') {
+
+    cin >> arg1;
+    OptionString = "start " + arg1;
+    return OptionString;
+
+  } else if (option.at(0) == '2') {
+
+    return "list_games";
+  } else {
+    cin >> arg1;
+    OptionString = "join " + arg1;
+    return OptionString;
+
+  }
+
+}
+
 void ConsoleGrafic::printTheNewMove(const bool isWhite,
     list<Point> listOfPoints, Point& point) const {
   printTheBoard();

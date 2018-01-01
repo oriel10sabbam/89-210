@@ -14,24 +14,22 @@
 #include<unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-const long int MAX = 2;
 
 Client::Client(const char * serverIP, int serverPort) :
     serverIP(serverIP), serverPort(serverPort), clientSocket(0) {
 }
 
 char Client::getCharMessage() {
-  char result; //[MAX];
+  char result;
   int n = read(clientSocket, &result, sizeof(result));
-  if (n == -1) {
-    throw "Error reading result from socket2";
+  if ((n == 0) || (n == -1)) {
+    cout << "Error at the server ";
+    exit(-1);
   }
-  //char* strResult = result;
-  return result; //strResult;
+  return result;
 }
 
 void Client::sendCharMessage(string message) {
-  // Write the exercise arguments to the socket
 
   int len = message.length();
   int i = 0;
@@ -40,36 +38,38 @@ void Client::sendCharMessage(string message) {
   while (i < len) {
     m = message[i];
     int n = write(clientSocket, &m, sizeof(m));
-    if (n == -1) {
-      std::cout << "error send Message." << std::endl;
+    if ((n == 0) || (n == -1)) {
+      cout << "Error at the server ";
       exit(-1);
     }
 
     i++;
   }
-
-  cout << "sending the message: " << message << endl;
 }
 
 int Client::getMessage() {
   int result;
   int n = read(clientSocket, &result, sizeof(result));
-  if (n == -1) {
-    throw "Error reading result from socket2";
+  if ((n == 0) || (n == -1)) {
+    cout << "Error at the server ";
+    exit(-1);
   }
+
   return result;
+
 }
 
 void Client::sendMessage(int message) {
-  // Write the exercise arguments to the socket
+
   int n = write(clientSocket, &message, sizeof(message));
-  if (n == -1) {
-    std::cout << "error send Message." << std::endl;
+  if ((n == 0) || (n == -1)) {
+    cout << "Error at the server ";
     exit(-1);
   }
+
 }
 
-int Client::connectToServer() {
+void Client::connectToServer() {
 // Create a socket point
   clientSocket = socket(AF_INET, SOCK_STREAM, 0);
   if (clientSocket == -1) {
@@ -99,12 +99,6 @@ int Client::connectToServer() {
       sizeof(serverAddress)) == -1) {
     throw "Error connecting to server";
   }
-  int message;
-  int n = read(clientSocket, &message, sizeof(message));
-  if (n == -1) {
-    throw "Error reading result from socket";
-  }
-  return message;
 
 }
 

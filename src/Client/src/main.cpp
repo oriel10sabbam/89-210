@@ -65,12 +65,53 @@ int main() {
     blackPlayer = new UserPlayer(false);
 
   } else {
+
     isRemoteGame = true;
-    grafic->printAMessage("connected to server \n");
-    grafic->printAMessage("waiting for other player to join.. \n");
+    grafic->printAMessage("connected to server \n\n");
     int whiteOrBlack;
     try {
-      whiteOrBlack = client.connectToServer();
+      client.connectToServer();
+      while (true) {
+        string remoteOption = grafic->printTheRemoteMenu();
+        client.sendCharMessage(remoteOption);
+
+        if (remoteOption.find("start") != std::string::npos) {
+          int result = client.getMessage();
+          if (result == -1) {
+            grafic->printAMessage("this game already exists \n");
+          } else {
+            grafic->printAMessage("start a new game,"
+                " Waiting for other player to join  \n");
+            break;
+          }
+        }
+
+        if (remoteOption.find("list_games") != std::string::npos) {
+          string message;
+          int len = client.getMessage();
+          int i = 0;
+          while (i < len) {
+            message = message + client.getCharMessage();
+            i++;
+          }
+
+          grafic->printAMessage("the list of games:\n" + message + "\n\n");
+
+        }
+
+        if (remoteOption.find("join") != std::string::npos) {
+          int result = client.getMessage();
+          if (result == -1) {
+            grafic->printAMessage("this game is not exists \n");
+          } else {
+            break;
+          }
+        }
+
+      }
+
+      whiteOrBlack = client.getMessage();
+
     } catch (const char * msg) {
       cout << "error at connect to server. Reason: " << msg << endl;
       return (-1);

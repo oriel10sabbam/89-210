@@ -26,10 +26,12 @@ public:
 
   /*
    * connectToServer- this method connect to the server
-   * return- 1 or 2, 1- if this client connect first, 2- otherwise.
    */
-  int connectToServer();
+  void connectToServer();
 
+  /*
+   * getCharMessage- return a Char Message
+   */
   char getCharMessage();
 
   void sendCharMessage(string message/*[]*/);

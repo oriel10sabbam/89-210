@@ -70,6 +70,12 @@ public:
   TheRival printTheMenu() const;
 
   /*
+   *  printTheRemoteMenu- print The Remote Menu
+   *  @return the message that the user choose
+   */
+  virtual string printTheRemoteMenu() const;
+
+  /*
    *printAnErrorInputNotANum- print An Error if the Input is Not A Num
    */
   void printAnErrorInputNotANum() const;

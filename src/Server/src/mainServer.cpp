@@ -45,10 +45,11 @@ int main() {
 
   Server server(port);
   map<string, Command*> commandsMap;
-
-  commandsMap["start"] = new StartGameC(&server);
-  commandsMap["list_games"] = new ListGamesC(&server);
-  commandsMap["join"] = new JoinGameC(&server);
+  map<string, int> mapGameToClientsocket;
+  mapGameToClientsocket.clear();
+  commandsMap["start"] = new StartGameC(&mapGameToClientsocket, &server);
+  commandsMap["list_games"] = new ListGamesC(&mapGameToClientsocket, &server);
+  commandsMap["join"] = new JoinGameC(&mapGameToClientsocket, &server);
   commandsMap["play"] = new PlayOneMoveC(&server);
   commandsMap["close"] = new CloseGameC(&server);
 

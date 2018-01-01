@@ -13,6 +13,9 @@ Grafic::Grafic(Board* board) :
     board(board) {
 }
 
+string Grafic::printTheRemoteMenu() const {
+
+}
 Grafic::~Grafic() {
 
 }

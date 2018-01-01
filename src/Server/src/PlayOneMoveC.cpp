@@ -20,9 +20,8 @@ PlayOneMoveC::~PlayOneMoveC() {
 }
 
 void PlayOneMoveC::execute(vector<string> args) {
-//  char oneMoveChar[MAX];
+
   string oneMoveString = args[1] + " " + args[2];
-//  sprintf(oneMoveChar, "%s", oneMoveString.c_str());
-  server->sendCharMessage(atoi(args[3].c_str()), oneMoveString);
+  server->sendCharMessage(atoi(args[4].c_str()), oneMoveString);
 
 }

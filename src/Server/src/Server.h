@@ -4,9 +4,6 @@
  *  Created on: Nov 29, 2017
  *      Author: oriel
  */
-#include <string>
-#include <list>
-#include <vector>
 
 #ifndef SERVER_H_
 #define SERVER_H_
@@ -21,10 +18,17 @@
 #include <iostream>
 #include <stdio.h>
 #include <poll.h>
+
 #include <string>
 #include <list>
 #include <vector>
+#include <map>
+#include <algorithm>
+
+#include<pthread.h>
+#include<cstdlib>
 #include "CommandsManager.h"
+#include "GameManager.h"
 using namespace std;
 
 /*
@@ -50,39 +54,12 @@ public:
    */
   void stop();
 
-  list<string> getListOfGames();
-
-  /*
-   *  getCharMessage- get Message from a clientSocket
-   *  @ param clientSocket- the Socket of a client
-   *  @ param message- the message to get from the socket
-   */
-  void getCharMessage(int clientSocket, string message);
-
   /*
    *  sendCharMessage- send Message to a clientSocket
    *  @ param clientSocket- the Socket of a client
    *  @ param message- the message to send the socket
    */
   void sendCharMessage(int clientSocket, string message);
-
-  /*
-   *  startNewGame- start a New Game
-   *  @ param newGame- the new Game
-   */
-  void startNewGame(string newGame);
-
-  /*
-   *  joinGame- join to Game
-   *  @ param game- the game to join
-   */
-  void joinGame(string game);
-
-  /*
-   *  closeGame- close a Game
-   *  @ param game- the Game to close
-   */
-  void closeGame(string game);
 
   /*
    *  setCommandManager- set Command Manager
@@ -94,25 +71,24 @@ public:
    * splitBySpace- split a string by space
    *  @ param str- the string to split
    *  @ param clientsocket- the client socket fp.
+   *  @ param otherClientsocket- the other client socket fp.
    *  @ return vector of args
    *
    */
-  vector<string> splitBySpace(string str, int clientsocket);
-
-private:
-
-  int port;
-  int serverSocket;
-  list<string> listOfGames;
-  CommandsManager* commandsManager;
+  vector<string> splitBySpace(string str, int clientsocket,
+      int otherClientsocket = 0);
 
   /*
-   *  startTheGame- start to get and sent the messages (the messages are
-   *  two int values that represent a position on the board.)
-   *  @ param clientSocket1- the Socket of client1
-   *  @ param clientSocket2- the Socket of client2
+   * serverAcceptClient- the server Accept Client method
+   *  @ param tArgs- the the arguments to accept new client
    */
-  void startTheGame(int clientSocket1, int clientSocket2);
+  void serverAcceptClient(void * tArgs);
+
+  /*
+   * serverHandleClient- handle one Client
+   *  @ param clientsocket- the client socket
+   */
+  void serverHandleClient(int clientsocket);
 
   /*
    *  getMessage- get Message from a clientSocket
@@ -129,11 +105,29 @@ private:
   void sendMessage(int clientSocket, int& message);
 
   /*
-   *  clientClosed- check if the client Closed
-   *  @ param clientSocket- the Socket of a client
-   *  @ return true if the client Closed
+   * closeClient- close the clientsockets and exit the thread
+   *  @ param clientSocket1- the clientSocket to close
+   *  @ param clientSocket2- the clientSocket to close
    */
-  bool clientClosed(int clientSocket);
+  void closeClients(int clientSocket1, int clientSocket2);
+
+  /*
+   * getCommandsManager- return pointer to CommandsManager
+   */
+  CommandsManager* getCommandsManager();
+
+private:
+
+  /*
+   * waitForExit- wait For the string 'exit' from the user
+   */
+  void waitForExit();
+
+  int port;
+  int serverSocket;
+  vector<pthread_t> vectorOfThread;
+  vector<int> vectorOfSocket;
+  CommandsManager* commandsManager;
 
 };
 
