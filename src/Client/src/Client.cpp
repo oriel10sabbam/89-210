@@ -15,13 +15,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <signal.h>
+
 Client::Client(const char * serverIP, int serverPort) :
     serverIP(serverIP), serverPort(serverPort), clientSocket(0) {
 }
 
 char Client::getCharMessage() {
   char result;
+  signal(SIGPIPE, SIG_IGN);
   int n = read(clientSocket, &result, sizeof(result));
+  signal(SIGPIPE, SIG_IGN);
   if ((n == 0) || (n == -1)) {
     cout << "Error at the server ";
     exit(-1);
@@ -37,7 +41,9 @@ void Client::sendCharMessage(string message) {
   sendMessage(len);
   while (i < len) {
     m = message[i];
+    signal(SIGPIPE, SIG_IGN);
     int n = write(clientSocket, &m, sizeof(m));
+    signal(SIGPIPE, SIG_IGN);
     if ((n == 0) || (n == -1)) {
       cout << "Error at the server ";
       exit(-1);
@@ -49,7 +55,9 @@ void Client::sendCharMessage(string message) {
 
 int Client::getMessage() {
   int result;
+  signal(SIGPIPE, SIG_IGN);
   int n = read(clientSocket, &result, sizeof(result));
+  signal(SIGPIPE, SIG_IGN);
   if ((n == 0) || (n == -1)) {
     cout << "Error at the server ";
     exit(-1);
@@ -60,8 +68,9 @@ int Client::getMessage() {
 }
 
 void Client::sendMessage(int message) {
-
+  signal(SIGPIPE, SIG_IGN);
   int n = write(clientSocket, &message, sizeof(message));
+  signal(SIGPIPE, SIG_IGN);
   if ((n == 0) || (n == -1)) {
     cout << "Error at the server ";
     exit(-1);
