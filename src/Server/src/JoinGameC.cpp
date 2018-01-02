@@ -20,8 +20,8 @@ JoinGameC::~JoinGameC() {
 }
 void JoinGameC::execute(vector<string> args) {
 
-  string nameOfGame = args[1];
-  bool theGameExists = isGameInMap(nameOfGame);
+  string nameOfThefGame = args[1];
+  bool theGameExists = isGameInMap(nameOfThefGame);
   int clientsocket2 = atoi(args[2].c_str());
 
   int message;
@@ -30,7 +30,7 @@ void JoinGameC::execute(vector<string> args) {
 
     server->sendMessage(clientsocket2, message);
 
-    int clientsocket1 = returnSocketFromMap(nameOfGame);
+    int clientsocket1 = returnSocketFromMap(nameOfThefGame);
 
     removeValueFromMap(nameOfGame);
 
