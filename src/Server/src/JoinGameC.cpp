@@ -18,7 +18,6 @@ JoinGameC::JoinGameC(map<string, int>* mapGameToClientsocket, Server* server) :
 
 JoinGameC::~JoinGameC() {
 }
-
 void JoinGameC::execute(vector<string> args) {
 
   string nameOfGame = args[1];
@@ -44,10 +43,8 @@ void JoinGameC::execute(vector<string> args) {
     message = -1;
     server->sendMessage(clientsocket2, message);
     server->serverHandleClient(clientsocket2);
-
   }
 }
-
 int JoinGameC::returnSocketFromMap(string key) {
 
   pthread_mutex_lock (&map_mutexJ);
@@ -55,13 +52,11 @@ int JoinGameC::returnSocketFromMap(string key) {
   pthread_mutex_unlock(&map_mutexJ);
   return clientsocket;
 }
-
 void JoinGameC::removeValueFromMap(string key) {
   pthread_mutex_lock (&map_mutexJ);
   mapGameToClientsocket->erase(key);
   pthread_mutex_unlock(&map_mutexJ);
 }
-
 bool JoinGameC::isGameInMap(string game) {
   pthread_mutex_lock (&map_mutexJ);
   map<string, int>::iterator it = mapGameToClientsocket->find(game);
@@ -71,6 +66,5 @@ bool JoinGameC::isGameInMap(string game) {
   }
   pthread_mutex_unlock(&map_mutexJ);
   return false;
-
 }
 

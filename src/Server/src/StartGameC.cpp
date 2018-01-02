@@ -18,7 +18,6 @@ StartGameC::StartGameC(map<string, int>* mapGameToClientsocket, Server* server) 
 
 StartGameC::~StartGameC() {
 }
-
 void StartGameC::execute(vector<string> args) {
 
   pair<string, int> pairGame;
@@ -33,7 +32,6 @@ void StartGameC::execute(vector<string> args) {
     server->serverHandleClient(clientsocket);
   }
 }
-
 int StartGameC::setNeweGame(pair<string, int> pairGameSocket) {
   pthread_mutex_lock (&map_mutexS);
   map<string, int>::iterator it = mapGameToClientsocket->find(
@@ -49,6 +47,4 @@ int StartGameC::setNeweGame(pair<string, int> pairGameSocket) {
   } else {
     return -1;
   }
-
 }
-
