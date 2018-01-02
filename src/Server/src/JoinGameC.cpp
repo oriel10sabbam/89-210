@@ -32,7 +32,7 @@ void JoinGameC::execute(vector<string> args) {
 
     int clientsocket1 = returnSocketFromMap(nameOfThefGame);
 
-    removeValueFromMap(nameOfGame);
+    removeValueFromMap(nameOfThefGame);
 
     CommandsManager* commandsManager = server->getCommandsManager();
 

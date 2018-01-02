@@ -1,3 +1,57 @@
+commit 612e2e2067dfae38bbac6b74afd733863c045db9
+Author: GuyZach <gzach7220@gmail.com>
+Date:   Tue Jan 2 13:04:11 2018 +0200
+
+    finish GameManeger
+
+commit f8d349193dd94b80684203363d167b07b8ffaeaf
+Author: GuyZach <gzach7220@gmail.com>
+Date:   Tue Jan 2 12:54:57 2018 +0200
+
+    finish GameManeger
+
+commit a2598cdf54cff34db6afd41a07f91c9e9ba09ebe
+Author: GuyZach <gzach7220@gmail.com>
+Date:   Tue Jan 2 12:48:15 2018 +0200
+
+    match start and join
+
+commit 15d0528ffc4d3a91c1a794e20101afcd20d81690
+Author: Oriel Sabban <oriel10sabban@gmail.com>
+Date:   Tue Jan 2 10:10:15 2018 +0200
+
+    add handle pipesugnal to client
+
+commit 96cfe6d55cf03e462b6136c0a73111c00efbb15c
+Author: Oriel Sabban <oriel10sabban@gmail.com>
+Date:   Tue Jan 2 00:20:17 2018 +0200
+
+    update Server
+
+commit e3f51f375e812aeb9093f636b8105dd42c834c15
+Author: Oriel Sabban <oriel10sabban@gmail.com>
+Date:   Mon Jan 1 23:33:48 2018 +0200
+
+    update the code for Ex5
+
+commit 59d004aca6c7170ac78f2cb96f7ee62cc588ec0e
+Author: Oriel Sabban <oriel10sabban@gmail.com>
+Date:   Sun Dec 24 22:17:57 2017 +0200
+
+    update command design pattern and sending string
+
+commit 53d905da13f28438009f2f29436fc61e1037585e
+Author: oriel10sabban <33681562+oriel10sabban@users.noreply.github.com>
+Date:   Sun Dec 10 21:44:19 2017 +0200
+
+    delete info.txt (again :) )
+
+commit f0dc0b5d481d76ec7db3fd0255c245cc173542f3
+Author: Oriel Sabban <oriel10sabban@gmail.com>
+Date:   Sun Dec 10 21:38:56 2017 +0200
+
+    update the remote player and the server
+
 commit 12d39ac7d90e9faa32e8579963b871c26f285273
 Author: Oriel Sabban <oriel10sabban@gmail.com>
 Date:   Wed Dec 6 19:20:29 2017 +0200
