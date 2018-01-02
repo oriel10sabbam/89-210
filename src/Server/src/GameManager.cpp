@@ -6,16 +6,13 @@
  */
 
 #include "GameManager.h"
-
 using namespace std;
 
 GameManager::GameManager(CommandsManager* commandsManager) :
     commandsManager(commandsManager) {
 }
-
 GameManager::~GameManager() {
 }
-
 void GameManager::startGame(int clientSocket1, int clientSocket2) {
 
   int n;
@@ -26,7 +23,6 @@ void GameManager::startGame(int clientSocket1, int clientSocket2) {
     cout << "Error at write to clientSocket1 \n";
     pthread_exit (NULL);
   }
-
   firstMessage = 2;
   n = write(clientSocket2, &firstMessage, sizeof(firstMessage));
   if ((n == 0) || (n == -1)) {
@@ -62,7 +58,6 @@ void GameManager::doOneTurn(int clientSocket1, int clientSocket2) {
   int j = 0;
   message = "";
   while (j < num) {
-
     int n = read(clientSocket1, &c, sizeof(c));
     if ((n == 0) || (n == -1)) {
       cout << "Error at read from clientSocket1 \n";
@@ -75,16 +70,13 @@ void GameManager::doOneTurn(int clientSocket1, int clientSocket2) {
 
   args = splitBySpace(message, clientSocket1, clientSocket2);
   commandsManager->executeCommand(args[0], args);
-
 }
-
 vector<string> GameManager::splitBySpace(string str, int clientsocket,
     int otherClientsocket) {
   istringstream buf(str);
   istream_iterator<string> beg(buf), end;
 
-  vector < string > args(beg, end); // done!
-
+  vector < string > args(beg, end);
   stringstream numS;
   numS << clientsocket;
 
@@ -95,5 +87,4 @@ vector<string> GameManager::splitBySpace(string str, int clientsocket,
   args.push_back(numOther.str());
 
   return args;
-
 }
