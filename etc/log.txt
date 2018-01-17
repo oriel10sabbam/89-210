@@ -1,3 +1,33 @@
+commit debb62c144d37aaad638fe45d04fc8da34486ec7
+Author: GuyZach <gzach7220@gmail.com>
+Date:   Wed Jan 17 12:55:03 2018 +0200
+
+    change constructor
+
+commit 6c36438bf055136063e618d3ab0319c4096e674b
+Author: GuyZach <gzach7220@gmail.com>
+Date:   Wed Jan 17 12:49:19 2018 +0200
+
+    few adjustments
+
+commit d2e1744e5fd86d1264bfdfcecf0d17e6cd1871b2
+Author: GuyZach <gzach7220@gmail.com>
+Date:   Wed Jan 17 12:41:58 2018 +0200
+
+    fix a little bug
+
+commit 49125e76a6681a2900086b93160d0afc339bd478
+Author: Oriel Sabban <oriel10sabban@gmail.com>
+Date:   Wed Jan 17 11:43:24 2018 +0200
+
+    add the exe files
+
+commit 7a377c248c9e8829583423958c298c979fabd977
+Author: Oriel Sabban <oriel10sabban@gmail.com>
+Date:   Wed Jan 17 11:40:32 2018 +0200
+
+    update the ThreadPool for ex7
+
 commit 6b1b273877e1471372262276433c2bb203d8e1c2
 Author: Oriel Sabban <oriel10sabban@gmail.com>
 Date:   Wed Jan 17 11:36:07 2018 +0200
