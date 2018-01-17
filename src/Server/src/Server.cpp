@@ -137,6 +137,7 @@ void Server::start() {
   pthread_mutex_lock (&vector_thread_mutex);
   vectorOfThread.push_back(threadFirst);
   pthread_mutex_unlock(&vector_thread_mutex);
+
   if (rc) {
     cout << "Error: unable to create thread, " << rc << endl;
     exit(-1);

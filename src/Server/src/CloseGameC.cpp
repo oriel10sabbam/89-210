@@ -14,17 +14,13 @@ using namespace std;
 
 CloseGameC::CloseGameC(Server* server) :
     server(server) {
-
 }
 
 CloseGameC::~CloseGameC() {
 }
 
 void CloseGameC::execute(vector<string> args) {
-
   int clientsocketFirst = atoi(args[1].c_str());
   int clientsocketSecond = atoi(args[2].c_str());
-
   server->closeClients(clientsocketFirst, clientsocketSecond);
-
 }

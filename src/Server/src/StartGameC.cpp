@@ -25,6 +25,7 @@ void StartGameC::execute(vector<string> args) {
   pairGame.first = args[1];
   pairGame.second = clientsocket;
   int result = setNeweGame(pairGame);
+
   if (result == 1) {
     server->sendMessage(clientsocket, result);
   } else {

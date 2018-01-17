@@ -28,6 +28,7 @@ void ThreadPool::addTask(Task *task) {
 }
 
 void ThreadPool::executeTasks() {
+
   while (!stopped) {
     pthread_mutex_lock (&lock);
     if (!tasksQueue.empty()) {
@@ -40,6 +41,7 @@ void ThreadPool::executeTasks() {
       sleep(1);
     }
   }
+
 }
 
 void ThreadPool::terminate() {

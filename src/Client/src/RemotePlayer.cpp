@@ -27,7 +27,6 @@ vector<int> RemotePlayer::splitBySpace(string st) {
     string s = *it;
     argsInt.push_back(atoi(s.c_str()));
   }
-
   return argsInt;
 }
 
