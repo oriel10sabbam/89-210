@@ -1,3 +1,15 @@
+commit 6b1b273877e1471372262276433c2bb203d8e1c2
+Author: Oriel Sabban <oriel10sabban@gmail.com>
+Date:   Wed Jan 17 11:36:07 2018 +0200
+
+    add the Thread pool files
+
+commit 0711ed37a2f9a5a4b37009b245aed7d74a1b2bc1
+Author: Oriel Sabban <oriel10sabban@gmail.com>
+Date:   Tue Jan 2 21:40:13 2018 +0200
+
+    fix a littel bug
+
 commit 612e2e2067dfae38bbac6b74afd733863c045db9
 Author: GuyZach <gzach7220@gmail.com>
 Date:   Tue Jan 2 13:04:11 2018 +0200
