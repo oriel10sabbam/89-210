@@ -27,7 +27,6 @@ using namespace std;
 
 int main() {
   ifstream inFile;
-
   try {
     inFile.open("./definition_server.txt");
   } catch (const char * msg) {
@@ -52,9 +51,7 @@ int main() {
   commandsMap["join"] = new JoinGameC(&mapGameToClientsocket, &server);
   commandsMap["play"] = new PlayOneMoveC(&server);
   commandsMap["close"] = new CloseGameC(&server);
-
   CommandsManager* commandsManager = new CommandsManager(commandsMap);
-
   server.setCommandManager(commandsManager);
 
   try {
