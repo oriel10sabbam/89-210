@@ -13,9 +13,9 @@ RemotePlayer::RemotePlayer(bool isWhite, Client& client) :
     Player(isWhite), client(client) {
 }
 
-vector<int> RemotePlayer::splitBySpace(string str) {
+vector<int> RemotePlayer::splitBySpace(string st) {
 
-  std::istringstream buf(str);
+  std::istringstream buf(st);
   std::istream_iterator<std::string> beg(buf), end;
 
   std::vector < std::string > args(beg, end); // done!
