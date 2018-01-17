@@ -68,19 +68,6 @@ void Server::serverHandleClient(int clientsocket) {
   vector < string > args = splitBySpace(message, clientsocket);
 
   commandsManager->executeCommand(args[0], args);
-  pthread_mutex_lock (&vector_thread_mutex);
-
-  pthread_t pthreadSelf = pthread_self();
-
-  for (vector<pthread_t>::iterator it = vectorOfThread.begin();
-      it != vectorOfThread.end(); ++it) {
-    pthread_t pthreadSelfPointer = *it;
-    if (pthreadSelfPointer == pthreadSelf) {
-      vectorOfThread.erase(it);
-      break;
-    }
-  }
-  pthread_mutex_unlock(&vector_thread_mutex);
 
 }
 
@@ -105,27 +92,16 @@ void Server::serverAcceptClient(void *tArgs) {
   vectorOfSocket.push_back(clientSocket);
   pthread_mutex_unlock(&vector_socket_mutex);
 
-  pthread_t thread;
-
   ArgsThread2 args2;
   args2.clientsocket = clientSocket;
   args2.server = this;
-
-  int rc2 = pthread_create(&thread, NULL, handleClient, &args2);
-
-  pthread_mutex_lock (&vector_thread_mutex);
-  vectorOfThread.insert(vectorOfThread.begin(), thread);
-  pthread_mutex_unlock(&vector_thread_mutex);
-
-  if (rc2) {
-    cout << "Error: unable to create thread, " << rc2 << endl;
-    exit(-1);
-  }
-
+  Task task = Task(handleClient, &args2);
+  pool.addTask(&task);
 }
 
 Server::Server(int port) :
-    port(port), serverSocket(0), commandsManager(NULL) {
+    port(port), serverSocket(0), commandsManager(NULL), pool(
+        ThreadPool(THREADS_NUM)) {
   vectorOfThread.clear();
   vectorOfSocket.clear();
   cout << "Server" << endl;
@@ -189,7 +165,6 @@ void Server::waitForExit() {
 
       pthread_mutex_unlock(&vector_socket_mutex);
 
-      //end the threads
       pthread_mutex_lock (&vector_thread_mutex);
 
       for (vector<pthread_t>::iterator it = vectorOfThread.begin();
@@ -200,7 +175,9 @@ void Server::waitForExit() {
       }
       pthread_mutex_unlock(&vector_thread_mutex);
 
+      pool.terminate();
       delete commandsManager;
+      stop();
       break;
     } else {
       cout << "you write a wrong input, please write only 'exit'"
@@ -294,23 +271,6 @@ void Server::closeClients(int clientSocket1, int clientSocket2) {
     }
   }
   pthread_mutex_unlock(&vector_socket_mutex);
-
-  //remove the current pthread_t from the vector
-  pthread_mutex_lock (&vector_thread_mutex);
-
-  pthread_t pthreadSelf = pthread_self();
-
-  for (vector<pthread_t>::iterator it = vectorOfThread.begin();
-      it != vectorOfThread.end(); ++it) {
-    pthread_t pthreadSelfPointer = *it;
-    if (pthreadSelfPointer == pthreadSelf) {
-      vectorOfThread.erase(it);
-      break;
-
-    }
-  }
-
-  pthread_mutex_unlock(&vector_thread_mutex);
 
   close(clientSocket1);
   close(clientSocket2);

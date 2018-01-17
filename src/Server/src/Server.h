@@ -29,6 +29,11 @@
 #include<cstdlib>
 #include "CommandsManager.h"
 #include "GameManager.h"
+
+#include "ThreadPool.h"
+
+#define THREADS_NUM 5
+
 using namespace std;
 
 /*
@@ -128,7 +133,7 @@ private:
   vector<pthread_t> vectorOfThread;
   vector<int> vectorOfSocket;
   CommandsManager* commandsManager;
-
+  ThreadPool pool;
 };
 
 #endif /* SERVER_H_ */
